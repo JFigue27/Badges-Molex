@@ -1,0 +1,14 @@
+name: badge
+type: form
+entity: Badge
+load: this.load()
+layout:
+  - content:
+      - Value as Barcode
+      - FirstName
+      - LastName
+      - Company
+      - Citizenship
+      - Visiting
+      - CheckIn
+      - CheckOut

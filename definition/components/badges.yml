@@ -1,0 +1,31 @@
+name: badges
+type: list
+entity: Badge
+load: this.load()
+layout:
+  - container-fluid:
+      - h6: Badges
+      - pagination
+      - table:
+          columns:
+            - row:
+                - button: openItem
+            - Value as Barcode
+            - FirstName
+            - LastName
+            - Company
+            - Citizenship
+            - Visiting
+            - CheckIn
+            - CheckOut
+  - dialog:
+      id: badge
+      title: Badge
+      ok: Save
+      maxWith: sm
+      content:
+        - component: badge
+  - nav:
+      - search
+      - space
+      - button: create
