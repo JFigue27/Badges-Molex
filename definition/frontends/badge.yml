@@ -1,4 +1,5 @@
 name: badge
 displayName: Badge
-pages: {}
+pages:
+  badges: badges
 components: []

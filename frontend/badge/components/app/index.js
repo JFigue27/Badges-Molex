@@ -141,6 +141,7 @@ class App extends React.Component {
               {/* <IconButton color='inherit' onClick={this.toggleDrawer('right', true)}>
               <Icon>menu</Icon>
             </IconButton> */}
+              <img src='/static/images/Molex_White.png' alt='Molex Logo' style={{ width: 100, marginRight: 10 }} />
               <Typography variant='h6' color='inherit'>
                 Badge
               </Typography>
@@ -183,7 +184,7 @@ class App extends React.Component {
         <SnackbarProvider autoHideDuration={1500}>
           <MuiPickersUtilsProvider utils={MomentUtils}>
             <GlobalContext.Provider value={this.state.globals}>
-              <Grid container direction='column' item xs={12} style={{ padding: 10 }}>
+              <Grid container direction='column' alignItems='center' item xs={12} style={{ padding: 10 }}>
                 {this.props.children}
               </Grid>
             </GlobalContext.Provider>

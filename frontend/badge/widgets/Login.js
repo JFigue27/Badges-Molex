@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import Card from '@material-ui/core/Card';
-import TextField from '@material-ui/core/TextField';
+import { Card, Grid, TextField } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab';
 import Lock from '@material-ui/icons/Lock';
 import Fingerprint from '@material-ui/icons/Fingerprint';
@@ -33,12 +32,15 @@ const Login = props => {
         <Card className='card'>
           <form onSubmit={login}>
             <CardContent>
-              <Typography style={{ margin: '40px 5px' }} variant='h4' align='center' color='inherit'>
-                Badge
+              <Typography style={{ margin: '10px 5px' }} variant='h4' align='center' color='inherit'>
+                Visitor Badge
               </Typography>
-              {/* <div className="finger">
-                <Fingerprint style={{ fontSize: 80 }} />
-              </div> */}
+              <Grid container alignItems='center'>
+                <img src='/static/images/Molex_Red.png' alt='logo' style={{ width: 150 }} />
+              </Grid>
+              <div className='finger'>
+                <Fingerprint style={{ fontSize: 50 }} />
+              </div>
               <div className='text-field'>
                 <TextField required fullWidth label='Usuario' margin='normal' onChange={event => setUsername(event.target.value)} />
               </div>
