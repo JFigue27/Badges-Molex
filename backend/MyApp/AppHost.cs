@@ -157,6 +157,7 @@ namespace MyApp
             container.RegisterAutoWired<UserLogic>().ReusedWithin(ReuseScope.Request);
             container.RegisterAutoWired<AdditionalFieldLogic>().ReusedWithin(ReuseScope.Request);
             container.RegisterAutoWired<AdvancedSortLogic>().ReusedWithin(ReuseScope.Request);
+            container.RegisterAutoWired<BadgeLogic>().ReusedWithin(ReuseScope.Request);
             container.RegisterAutoWired<CatalogLogic>().ReusedWithin(ReuseScope.Request);
             container.RegisterAutoWired<CatalogTypeLogic>().ReusedWithin(ReuseScope.Request);
             container.RegisterAutoWired<FilterDataLogic>().ReusedWithin(ReuseScope.Request);
