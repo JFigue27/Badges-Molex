@@ -1,0 +1,15 @@
+name: Badge
+type: entity
+fields:
+  Value as Barcode: string
+  FirstName: string
+  LastName: string
+  Company: string
+  Citizenship: string
+  Visiting: string
+  CheckIn: dateTime
+  CheckOut: dateTime
+relationships:
+  oneToParent: []
+  oneToMany: []
+  manyToOne: []
