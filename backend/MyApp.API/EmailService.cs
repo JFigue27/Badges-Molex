@@ -191,10 +191,10 @@ namespace MyApp.API
     [Route("/Email/MakeRevision", "POST")]
     public class MakeEmailRevision : Email { }
 
-    [Route("/Email/Checkout", "POST")]
+    [Route("/Email/Checkout/{Id}", "POST")]
     public class CheckoutEmail : Email { }
 
-    [Route("/Email/CancelCheckout", "POST")]
+    [Route("/Email/CancelCheckout/{Id}", "POST")]
     public class CancelCheckoutEmail : Email { }
 
     [Route("/Email/Checkin", "POST")]

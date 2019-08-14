@@ -53,6 +53,41 @@ export class CRUDFactory {
       .catch(this.GeneralError);
   }
 
+  async Checkout(entity) {
+    return await Post(this.EndPoint + '/Checkout/' + entity.Id)
+      .then(r => this.UseCommonResponse(r))
+      .catch(this.GeneralError);
+  }
+
+  async CancelCheckout(entity) {
+    return await Post(this.EndPoint + '/CancelCheckout/' + entity.Id)
+      .then(r => this.UseCommonResponse(r))
+      .catch(this.GeneralError);
+  }
+
+  async Checkin(entity) {
+    return await Post(this.EndPoint + '/Checkin', entity)
+      .then(r => this.UseCommonResponse(r))
+      .catch(this.GeneralError);
+  }
+
+  Checkin = async entity =>
+    await Post(this.EndPoint + '/Checkin', entity)
+      .then(r => this.UseCommonResponse(r))
+      .catch(this.GeneralError);
+
+  async MakeRevision(entity) {
+    return await Post(this.EndPoint + '/MakeRevision', entity)
+      .then(r => this.UseCommonResponse(r))
+      .catch(this.GeneralError);
+  }
+
+  async Duplicate(entity) {
+    return await Post(this.EndPoint + '/Duplicate', entity)
+      .then(r => this.UseCommonResponse(r))
+      .catch(this.GeneralError);
+  }
+
   async CreateInstance(entity) {
     return await Post(this.EndPoint + '/CreateInstance', entity)
       .then(r => this.UseCommonResponse(r))
@@ -234,7 +269,7 @@ export class CRUDFactory {
         case 'MESSAGE':
           alertify.alert(response.ResponseDescription);
       }
-      return Promise.resolve();
+      return Promise.reject(response.ResponseDescription);
     }
     //ServiceStack wrapper
     else if (response.ResponseStatus) {
@@ -246,6 +281,7 @@ export class CRUDFactory {
           console.log(response.ResponseStatus.StackTrace);
           alert(response.ResponseStatus.Message);
       }
+      return Promise.reject(response.ResponseStatus.Message);
     }
     //Other
     else {
@@ -276,7 +312,7 @@ export class CRUDFactory {
   };
 
   toServerDate = date => {
-    var momentDate = moment(date);
+    var momentDate = moment(date || null);
     if (momentDate.isValid()) {
       momentDate.local();
       return momentDate.format();
@@ -292,9 +328,13 @@ export class CRUDFactory {
   };
 
   //Hooks:=======================================================================
-  ADAPTER_IN = entity => entity;
+  ADAPTER_IN(entity) {
+    return entity;
+  }
 
-  ADAPTER_OUT = entity => entity;
+  ADAPTER_OUT(entity) {
+    return entity;
+  }
 
   //Catalogs:====================================================================
   async GetCatalog(name, params = '', limit = 0, page = 1) {

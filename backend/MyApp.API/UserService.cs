@@ -191,10 +191,10 @@ namespace MyApp.API
     [Route("/User/MakeRevision", "POST")]
     public class MakeUserRevision : User { }
 
-    [Route("/User/Checkout", "POST")]
+    [Route("/User/Checkout/{Id}", "POST")]
     public class CheckoutUser : User { }
 
-    [Route("/User/CancelCheckout", "POST")]
+    [Route("/User/CancelCheckout/{Id}", "POST")]
     public class CancelCheckoutUser : User { }
 
     [Route("/User/Checkin", "POST")]

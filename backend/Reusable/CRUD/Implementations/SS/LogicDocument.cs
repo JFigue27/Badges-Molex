@@ -334,7 +334,8 @@ namespace Reusable.CRUD.Implementations.SS
                 ForeignKey = entity.Id,
                 Value = clone.ToJson(),
                 RevisionMessage = entity.RevisionMessage,
-                CreatedAt = DateTimeOffset.Now
+                CreatedAt = DateTimeOffset.Now,
+                Discriminator = entity.EntityName
             };
 
             RevisionLogic.Add(revision);
@@ -354,7 +355,8 @@ namespace Reusable.CRUD.Implementations.SS
                 ForeignKey = entity.Id,
                 Value = clone.ToJson(),
                 RevisionMessage = entity.RevisionMessage,
-                CreatedAt = DateTimeOffset.Now
+                CreatedAt = DateTimeOffset.Now,
+                Discriminator = entity.EntityName
             };
 
             await RevisionLogic.AddAsync(revision);
@@ -378,46 +380,38 @@ namespace Reusable.CRUD.Implementations.SS
         {
             var document = GetById(id) as BaseDocument;
 
-            if (!Auth.IsAuthenticated)
-                throw new KnownError("User not authenticated.");
+            if (!string.IsNullOrWhiteSpace(document.CheckedoutBy)
+                && Auth.UserName != document.CheckedoutBy)
+                throw new KnownError($"This document is already Checked Out by: {document.CheckedoutBy}");
 
             if (document.CheckedoutBy == null)
             {
-                document.CheckedoutBy = Auth.UserName;
-                Db.UpdateOnly(document, only => only.CheckedoutBy);
-            }
-            else if (!string.IsNullOrWhiteSpace(document.CheckedoutBy)
-                && Auth.UserName != document.CheckedoutBy)
-            {
-                throw new KnownError($"This document is already Checked Out by: {document.CheckedoutBy}");
-            }
+                Db.UpdateOnly(() => new Entity { CheckedoutBy = Auth.UserName }, e => e.Id == id);
 
-            #region Cache
-            CacheOnUpdate(document as Entity);
-            #endregion
+                #region Cache
+                document.CheckedoutBy = Auth.UserName;
+                CacheOnUpdate(document as Entity);
+                #endregion
+            }
         }
 
         virtual public async Task CheckoutAsync(long id)
         {
             var document = await GetByIdAsync(id);
 
-            if (Auth.UserName == null)
-                throw new KnownError("User not authenticated.");
+            if (!string.IsNullOrWhiteSpace(document.CheckedoutBy)
+                && Auth.UserName != document.CheckedoutBy)
+                throw new KnownError("This document is already Checked Out by: {0}".Fmt(document.CheckedoutBy));
 
             if (document.CheckedoutBy == null)
             {
-                document.CheckedoutBy = Auth.UserName;
-                await Db.UpdateOnlyAsync(document, only => only.CheckedoutBy);
-            }
-            else if (!string.IsNullOrWhiteSpace(document.CheckedoutBy)
-                && Auth.UserName != document.CheckedoutBy)
-            {
-                throw new KnownError("This document is already Checked Out by: {0}".Fmt(document.CheckedoutBy));
-            }
+                await Db.UpdateOnlyAsync(new Entity { CheckedoutBy = Auth.UserName }, e => e.Id == id);
 
-            #region Cache
-            CacheOnUpdate(document);
-            #endregion
+                #region Cache
+                document.CheckedoutBy = Auth.UserName;
+                CacheOnUpdate(document);
+                #endregion
+            }
         }
 
         virtual public void CancelCheckout(long id)
@@ -429,10 +423,10 @@ namespace Reusable.CRUD.Implementations.SS
                 && !HasRoles("Admin"))
                 throw new KnownError($"Only User who Checked Out can \"Cancel Checked Out\": {document.CheckedoutBy}");
 
-            document.CheckedoutBy = null;
-            Db.UpdateOnly(document, only => only.CheckedoutBy);
+            Db.UpdateOnly(() => new Entity { CheckedoutBy = null }, e => e.Id == id);
 
             #region Cache
+            document.CheckedoutBy = null;
             CacheOnUpdate(document);
             #endregion
         }
@@ -445,10 +439,10 @@ namespace Reusable.CRUD.Implementations.SS
                 && !HasRoles("Admin"))
                 throw new KnownError($"Only User who Checked Out can \"Cancel Checked Out\": {document.CheckedoutBy}");
 
-            document.CheckedoutBy = null;
-            await Db.UpdateOnlyAsync(document, only => only.CheckedoutBy);
+            await Db.UpdateOnlyAsync(() => new Entity { CheckedoutBy = null }, e => e.Id == id);
 
             #region Cache
+            document.CheckedoutBy = null;
             CacheOnUpdate(document);
             #endregion
         }
@@ -456,21 +450,15 @@ namespace Reusable.CRUD.Implementations.SS
         virtual public void Checkin(Entity entity)
         {
             entity.CheckedoutBy = null;
-            Db.UpdateOnly(entity, only => only.CheckedoutBy);
-
-            #region Cache
-            CacheOnUpdate(entity);
-            #endregion
+            Update(entity);
+            MakeRevision(entity);
         }
 
-        virtual public async System.Threading.Tasks.Task CheckinAsync(Entity entity)
+        virtual public async Task CheckinAsync(Entity entity)
         {
             entity.CheckedoutBy = null;
-            await Db.UpdateOnlyAsync(entity, only => only.CheckedoutBy);
-
-            #region Cache
-            CacheOnUpdate(entity);
-            #endregion
+            await UpdateAsync(entity);
+            await MakeRevisionAsync(entity);
         }
 
         virtual public Entity CreateAndCheckout(Entity document)

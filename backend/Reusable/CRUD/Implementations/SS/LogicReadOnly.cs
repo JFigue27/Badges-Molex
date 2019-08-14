@@ -75,7 +75,7 @@ namespace Reusable.CRUD.Implementations.SS
 
             var entity = Db.LoadSelect(query).FirstOrDefault();
 
-            AdapterOut(entity);
+            if (entity != null) AdapterOut(entity);
 
             var response = entity;
             Cache.Set(cacheKey, response);
@@ -94,6 +94,8 @@ namespace Reusable.CRUD.Implementations.SS
                     .Where(e => e.Id == id);
 
             var entity = (await Db.LoadSelectAsync(query)).FirstOrDefault();
+
+            if (entity != null) AdapterOut(entity);
 
             var response = entity;
             Cache.Set(cacheKey, response);

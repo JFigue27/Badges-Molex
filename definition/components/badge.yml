@@ -4,11 +4,11 @@ entity: Badge
 load: this.load()
 layout:
   - content:
-      - Value as Barcode
-      - FirstName
-      - LastName
-      - Company
-      - Citizenship
-      - Visiting
-      - CheckIn
-      - CheckOut
+      - field: Value as Barcode
+      - field: FirstName
+      - field: LastName
+      - field: Company
+      - field: Citizenship
+      - field: Visiting
+      - field: CheckIn
+      - field: CheckOut

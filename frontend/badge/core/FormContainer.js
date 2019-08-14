@@ -1,4 +1,5 @@
 import React from 'react';
+import Router from 'next/router';
 import AuthService from './AuthService';
 
 class FormContainer extends React.Component {
@@ -20,10 +21,7 @@ class FormContainer extends React.Component {
   }
 
   // Service Operations:==========================================================
-
-  load = async criteria => {
-    return await this.refreshForm(criteria);
-  };
+  load = async criteria => await this.refreshForm(criteria);
 
   refreshForm = async criteria => {
     //Clear form:
@@ -81,10 +79,8 @@ class FormContainer extends React.Component {
       instance.Entry_State = 1;
       instance.isDisabled = false;
       this.AFTER_CREATE(instance);
-      this.setState({
-        baseEntity: instance
-      });
       this.ON_CHANGE(instance);
+      this.setState({ baseEntity: instance });
     });
   };
 
@@ -93,7 +89,7 @@ class FormContainer extends React.Component {
     if (confirm(`Please confirm to create a new ${this.service.config.EndPoint}`)) {
       return await this.service.CreateAndCheckout(item).then(entity => {
         this.AFTER_CREATE_AND_CHECKOUT(entity);
-        console.log('success');
+        this.success('Created and Checked Out.');
         return entity;
       });
     }
@@ -105,6 +101,7 @@ class FormContainer extends React.Component {
       this.AFTER_SAVE(entity);
       this.ON_CHANGE(entity);
       this.setState({ baseEntity: entity });
+      this.success('Saved.');
     });
   };
 
@@ -117,16 +114,16 @@ class FormContainer extends React.Component {
     revision.Revisions = this.state.baseEntity.Revisions;
     this.service.ADAPTER_IN(revision);
     selectedRevision.isOpened = true;
-    this.setState({
-      baseEntity: revision
-    });
     this.ON_CHANGE(revision);
+    this.setState({ baseEntity: revision });
+    this.success('Revision Loaded.');
   };
 
   take = async (entity, toUser) => {
     return await this.service.Take(entity, toUser).then(() => {
       entity.assignedTo = toUser.Value;
       entity.AssignationMade = false;
+      this.success('Assigned.');
     });
   };
 
@@ -135,13 +132,14 @@ class FormContainer extends React.Component {
     if (confirm(`Are you sure you want to remove it?`)) {
       return await this.service.Remove(entity).then(() => {
         this.AFTER_REMOVE(entity);
+        this.success('Removed.');
       });
     }
   };
 
   duplicate = async () => {
     return await this.service.Duplicate(this.state.baseEntity).then(() => {
-      console.log('duplicated');
+      this.success('Duplicated.');
     });
   };
 
@@ -150,7 +148,7 @@ class FormContainer extends React.Component {
       .Checkout(this.state.baseEntity)
       .then(response => {
         this.refreshForm(response);
-        console.log('checked out');
+        this.success('Checked Out.');
       })
       .catch(() => {
         this.load(this.state.baseEntity.Id);
@@ -160,7 +158,7 @@ class FormContainer extends React.Component {
   cancelCheckout = async () => {
     return await this.service.CancelCheckout(this.state.baseEntity).then(response => {
       this.refreshForm(response);
-      console.log('cancel checkout');
+      this.success('Cancel Checked Out.');
     });
   };
 
@@ -176,7 +174,7 @@ class FormContainer extends React.Component {
           this.load(response).then(() => {
             this.formMode = null;
             this.state.baseEntity.isDisabled = true;
-            console.log('revision created.');
+            this.success('Checked In.');
           });
         });
       });
@@ -188,7 +186,7 @@ class FormContainer extends React.Component {
       .Finalize(this.state.baseEntity)
       .then(response => {
         this.refreshForm(response);
-        console.log('finalized.');
+        this.success('Finalized.');
       })
       .catch(() => {
         this.load(this.state.baseEntity.Id);
@@ -200,16 +198,14 @@ class FormContainer extends React.Component {
       .Unfinalize(this.state.baseEntity)
       .then(response => {
         this.refreshForm(response);
-        console.log('unfinalized.');
+        this.success('Unfinalized.');
       })
       .catch(() => {
         this.load(this.state.baseEntity.Id);
       });
   };
 
-  onDialogOk = async () => {
-    await this.save();
-  };
+  onDialogOk = async () => await this.save();
 
   // Local Operations:============================================================
   handleInputChange = (event, field) => {
@@ -254,14 +250,10 @@ class FormContainer extends React.Component {
     this.ON_CHANGE(baseEntity, field);
   };
 
-  getCurrentUser = () => {
-    return AuthService.auth.user;
-  };
+  getCurrentUser = () => AuthService.auth.user;
 
   getCheckoutUser = () => {
-    if (this.state.baseEntity && this.state.baseEntity.CheckedoutBy) {
-      return this.state.baseEntity.CheckedoutBy;
-    }
+    if (this.state.baseEntity && this.state.baseEntity.CheckedoutBy) return this.state.baseEntity.CheckedoutBy;
   };
 
   _afterLoad = () => {
@@ -272,15 +264,14 @@ class FormContainer extends React.Component {
       user &&
       user.UserName &&
       this.state.baseEntity.CheckedoutBy.UserName.toLowerCase() == user.UserName.toLowerCase()
-    ) {
+    )
       this.setState({
         isDisabled: false
       });
-    } else {
+    else
       this.setState({
         isDisabled: true
       });
-    }
 
     this.AFTER_LOAD(this.state.baseEntity);
   };
@@ -294,13 +285,29 @@ class FormContainer extends React.Component {
 
   makeQueryParameters = fromObject => {
     let result = '?';
-    if (fromObject instanceof Object || typeof fromObject == 'object') {
+    if (fromObject instanceof Object || typeof fromObject == 'object')
       Object.getOwnPropertyNames(fromObject).forEach(prop => {
         result += `&${prop}=${fromObject[prop]}`;
       });
-    }
 
     return result;
+  };
+
+  navigateTo(href) {
+    return Router.push(href);
+  }
+
+  success = m => {
+    this.props.enqueueSnackbar(m, { variant: 'success' });
+  };
+  error = m => {
+    this.props.enqueueSnackbar(m, { variant: 'error' });
+  };
+  info = m => {
+    this.props.enqueueSnackbar(m, { variant: 'info' });
+  };
+  message = m => {
+    this.props.enqueueSnackbar(m);
   };
 
   //Formatters:===================================================================
@@ -334,11 +341,11 @@ class FormContainer extends React.Component {
 
   BEFORE_SAVE = entity => {};
 
-  AFTER_SAVE = entity => {};
+  AFTER_SAVE(entity) {}
 
   AFTER_REMOVE = entity => {};
 
-  BEFORE_CHECKIN = () => {};
+  BEFORE_CHECKIN = async () => {};
 
   ON_CHANGE = (data, field) => {
     this.props.onChange && this.props.onChange(data, field);
