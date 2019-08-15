@@ -19,10 +19,6 @@ const defaultConfig = {
   ///start:slot:config<<<///end:slot:config<<<
 };
 
-function navigateTo(target) {
-  Router.push(target);
-}
-
 class BadgeForm extends FormContainer {
   constructor(props, config) {
     Object.assign(defaultConfig, config);

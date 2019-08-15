@@ -12,6 +12,12 @@ import MomentUtils from '@date-io/moment';
 import { SnackbarProvider } from 'notistack';
 import { GlobalContext } from './globals-context';
 
+import Router from 'next/router';
+
+function navigateTo(target) {
+  Router.push(target);
+}
+
 class App extends React.Component {
   pages = [
     ///start:slot:pages<<<
@@ -138,9 +144,9 @@ class App extends React.Component {
         {!fullscreen && (
           <AppBar position='fixed' className='MainAppBar app-nav'>
             <Toolbar>
-              {/* <IconButton color='inherit' onClick={this.toggleDrawer('right', true)}>
-              <Icon>menu</Icon>
-            </IconButton> */}
+              <IconButton color='inherit' onClick={() => navigateTo('/')}>
+                <Icon>home</Icon>
+              </IconButton>
               <img src='/static/images/Molex_White.png' alt='Molex Logo' style={{ width: 100, marginRight: 10 }} />
 
               <Grid item xs />

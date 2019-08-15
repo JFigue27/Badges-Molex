@@ -12,9 +12,12 @@ export default () => {
         <h1>WELCOME TO MOLEX JUÁREZ</h1>
         <img src='/static/images/Molex_Red.png' alt='Logo Molex' style={{ width: 220, margin: 50 }} />
         <Button variant='contained' onClick={() => navigateTo('/badge-new')}>
-          Start
+          New Visitor Badge
         </Button>
-        <img src='/static/images/id-badge-solid.svg' alt='Id-Badge' style={{ width: 150, marginTop: 50 }} />
+        <img src='/static/images/id-badge-solid.svg' alt='Id-Badge' style={{ width: 150, marginTop: 40 }} />
+        <Button variant='outlined' onClick={() => navigateTo('/badges')} style={{ marginTop: 30 }}>
+          Visitor Badge History
+        </Button>
         <AppBar style={{ top: 'auto', bottom: 0, background: '#333333' }}>
           <Toolbar>
             <Grid container direction='column' alignItems='center'>
