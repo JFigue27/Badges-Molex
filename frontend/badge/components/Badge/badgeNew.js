@@ -8,13 +8,20 @@ import { InputBase } from '@material-ui/core';
 import BadgeCard from './badgeCard';
 
 import BadgeService from './badge.service';
-///start:slot:dependencies<<<///end:slot:dependencies<<<
+///start:slot:dependencies<<<
+import { Button, Icon } from '@material-ui/core';
+import Router from 'next/router';
+///end:slot:dependencies<<<
 
 const service = new BadgeService();
 const defaultConfig = {
   service
   ///start:slot:config<<<///end:slot:config<<<
 };
+
+function navigateTo(target) {
+  Router.push(target);
+}
 
 class BadgeForm extends FormContainer {
   constructor(props, config) {
@@ -50,7 +57,10 @@ class BadgeForm extends FormContainer {
     console.log('AFTER_SAVE', entity);
     const { dialog } = this.props;
     if (dialog) dialog.close('ok');
-    ///start:slot:afterSave<<<///end:slot:afterSave<<<
+    ///start:slot:afterSave<<<
+
+    this.navigateTo('/badges');
+    ///end:slot:afterSave<<<
   };
 
   BEFORE_CHECKIN = () => {
@@ -71,11 +81,13 @@ class BadgeForm extends FormContainer {
         <Grid className='' container direction='row' justifyContent='center' alignItems='center' item xs={12}>
           <Container maxWidth='lg'>
             <Grid container spacing={3} style={{ paddingTop: '10%', paddingLeft: '15%', paddingRight: '15%' }}>
-              <Grid item xs={6}>
+              <Grid item xs={6} style={{ marginTop: 20 }}>
                 <BadgeCard badge={baseEntity} CheckIn={this.formatDate(baseEntity.CheckIn)} />
               </Grid>
               <Grid item xs={6}>
-                <Typography variant='h5'>Badge Form</Typography>
+                <Typography variant='h5' style={{ textAlign: 'center' }}>
+                  Visitior Badge Form
+                </Typography>
                 <TextField
                   type='text'
                   label='Barcode'
@@ -142,6 +154,19 @@ class BadgeForm extends FormContainer {
                   fullWidth
                   variant='outlined'
                 />
+                <Grid item />
+                <Button
+                  variant='contained'
+                  color='default'
+                  className='btn-primary'
+                  onClick={event => {
+                    this.save(event, {});
+                  }}
+                  fullWidth
+                  style={{ marginTop: 10 }}
+                >
+                  Save
+                </Button>
               </Grid>
             </Grid>
           </Container>

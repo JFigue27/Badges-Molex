@@ -75,7 +75,9 @@ class BadgeForm extends FormContainer {
             <BadgeCard badge={baseEntity} CheckIn={this.formatDate(baseEntity.CheckIn)} />
           </Grid>
           <Grid item xs={6}>
-            <Typography variant='h5'>Badge Form</Typography>
+            <Typography variant='h5' style={{ textAlign: 'center' }}>
+              Badge Form
+            </Typography>
             <TextField
               type='text'
               label='Barcode'

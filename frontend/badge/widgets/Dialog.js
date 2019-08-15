@@ -45,7 +45,7 @@ class DialogWidget extends React.Component {
         {!actionsOff &&
           (actions || (
             <DialogActions>
-              <Button onClick={onClose} color='primary'>
+              <Button onClick={onClose} color='primary' className='btn-secondary'>
                 Close
               </Button>
 
@@ -55,6 +55,7 @@ class DialogWidget extends React.Component {
                     this.onOk();
                   }}
                   color='primary'
+                  className='btn-primary'
                 >
                   {okLabel == true ? 'OK' : okLabel}
                 </Button>
