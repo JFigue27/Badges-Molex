@@ -1,9 +1,8 @@
 import React from 'react';
-import { Card, Typography, Grid, AppBar, Toolbar, CardContent } from '@material-ui/core';
-
+import { Card, Typography, Grid, AppBar, Toolbar, CardContent, InputBase } from '@material-ui/core';
 const BadgeCard = props => {
-  console.log(props);
   const badge = props.badge;
+  const CheckIn = props.CheckIn;
 
   return (
     <Grid container direction='row' alignItems='center'>
@@ -17,6 +16,7 @@ const BadgeCard = props => {
             {badge.FirstName || 'First Name'} <br /> {badge.LastName || 'Last Name'}
           </h1>
         </div>
+        <Typography variant='h6'>Valid To: {CheckIn}</Typography>
         <div className='Badge__section-info'>
           <h3>{badge.Company || 'Company'}</h3>
 

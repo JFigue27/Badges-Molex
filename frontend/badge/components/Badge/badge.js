@@ -70,13 +70,12 @@ class BadgeForm extends FormContainer {
 
     return (
       <NoSsr>
-        <Grid className='' container direction='row' item xs={12}>
+        <Grid className='' container direction='row' alignItems='center' item xs={12} style={{ padding: 20 }}>
           <Grid item xs={6}>
-            <BadgeCard badge={baseEntity} />
+            <BadgeCard badge={baseEntity} CheckIn={this.formatDate(baseEntity.CheckIn)} />
           </Grid>
           <Grid item xs={6}>
-            <Typography>Test</Typography>
-
+            <Typography variant='h5'>Badge Form</Typography>
             <TextField
               type='text'
               label='Barcode'
@@ -86,6 +85,7 @@ class BadgeForm extends FormContainer {
               margin='normal'
               disabled={this.isDisabled}
               fullWidth
+              variant='outlined'
             />
             <TextField
               type='text'
@@ -96,6 +96,7 @@ class BadgeForm extends FormContainer {
               margin='normal'
               disabled={this.isDisabled}
               fullWidth
+              variant='outlined'
             />
             <TextField
               type='text'
@@ -106,6 +107,7 @@ class BadgeForm extends FormContainer {
               margin='normal'
               disabled={this.isDisabled}
               fullWidth
+              variant='outlined'
             />
             <TextField
               type='text'
@@ -116,6 +118,7 @@ class BadgeForm extends FormContainer {
               margin='normal'
               disabled={this.isDisabled}
               fullWidth
+              variant='outlined'
             />
             <TextField
               type='text'
@@ -126,6 +129,7 @@ class BadgeForm extends FormContainer {
               margin='normal'
               disabled={this.isDisabled}
               fullWidth
+              variant='outlined'
             />
             <TextField
               type='text'
@@ -136,6 +140,7 @@ class BadgeForm extends FormContainer {
               margin='normal'
               disabled={this.isDisabled}
               fullWidth
+              variant='outlined'
             />
             <KeyboardDateTimePicker
               clearable
