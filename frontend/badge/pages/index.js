@@ -11,7 +11,7 @@ export default () => {
       <Grid container direction='column' alignItems='center' style={{ paddingTop: 50 }}>
         <h1>WELCOME TO MOLEX JUÁREZ</h1>
         <img src='/static/images/Molex_Red.png' alt='Logo Molex' style={{ width: 220, margin: 50 }} />
-        <Button variant='contained' onClick={() => navigateTo('/badges')}>
+        <Button variant='contained' onClick={() => navigateTo('/badge-new')}>
           Start
         </Button>
         <img src='/static/images/id-badge-solid.svg' alt='Id-Badge' style={{ width: 150, marginTop: 50 }} />

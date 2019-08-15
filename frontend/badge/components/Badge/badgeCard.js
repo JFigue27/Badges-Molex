@@ -16,12 +16,12 @@ const BadgeCard = props => {
             {badge.FirstName || 'First Name'} <br /> {badge.LastName || 'Last Name'}
           </h1>
         </div>
-        <Typography variant='h6'>Valid To: {CheckIn}</Typography>
+        <Typography variant='h6'>Valid To: {CheckIn && CheckIn}</Typography>
         <div className='Badge__section-info'>
           <h3>{badge.Company || 'Company'}</h3>
 
           <div>
-            <span className='font-weight-bold'>Visiting:</span> {badge.Visiting || 'Visiting'}
+            <span style={{ fontWeight: 'bold' }}>Visiting:</span> {badge.Visiting || 'Molex Employee'}
           </div>
         </div>
         <div className='Badge__footer'>Molex Juárez México</div>

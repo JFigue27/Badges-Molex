@@ -142,7 +142,7 @@ class BadgeForm extends FormContainer {
               fullWidth
               variant='outlined'
             />
-            <KeyboardDateTimePicker
+            {/* <KeyboardDateTimePicker
               clearable
               label='CheckIn'
               value={baseEntity.ConvertedCheckIn}
@@ -155,7 +155,7 @@ class BadgeForm extends FormContainer {
               value={baseEntity.ConvertedCheckOut}
               onChange={date => this.handleDateChange(date, 'ConvertedCheckOut')}
               format='MMM/DD/YYYY HH:mm'
-            />
+            /> */}
           </Grid>
         </Grid>
       </NoSsr>
