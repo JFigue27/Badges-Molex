@@ -10,6 +10,7 @@ layout:
           columns:
             - row:
                 - button: openItem
+                - button: removeItem
             - Value as Barcode
             - FirstName
             - LastName
@@ -20,12 +21,20 @@ layout:
             - CheckOut
   - dialog:
       id: badge
-      title: Badge
+      title: Visitor Badge
       ok: Save
       maxWith: sm
       content:
         - component: badge
+  - dialog:
+      id: checkout
+      title: CheckOut
+      ok: Save
+      maxWith: sm
+      content:
+        - component: checkOut
   - nav:
       - search
       - space
+      - button: openDialog | checkout
       - button: create

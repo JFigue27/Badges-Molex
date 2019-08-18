@@ -53,17 +53,19 @@ namespace MyApp.Logic
         protected override void OnBeforeSaving(Badge entity, OPERATION_MODE mode = OPERATION_MODE.NONE)
         {
             
-            ///start:slot:beforeSave<<<///end:slot:beforeSave<<<
+            ///start:slot:beforeSave<<<
+			if (string.IsNullOrWhiteSpace(entity.Value))
+			{
+				throw new KnownError("El campo no puede ir sin data");
+			}
+			///end:slot:beforeSave<<<
         }
 
         protected override void OnAfterSaving(Badge entity, OPERATION_MODE mode = OPERATION_MODE.NONE)
         {
-
-			///start:slot:afterSave<<<
-			if (entity.Value == "")
-			{
-				throw new Exception("El campo no puede ir sin data");
-			}
+            
+            ///start:slot:afterSave<<<
+			
 			///end:slot:afterSave<<<
         }
 
@@ -81,13 +83,23 @@ namespace MyApp.Logic
 
             foreach (var item in entities)
             {
-				
+                
             }
 
             return entities;
         }
 
         
-        ///start:slot:logic<<<///end:slot:logic<<<
+        ///start:slot:logic<<<
+		public void CheckOut(string Value)
+		{
+			Db.Update<Badge>(new 
+			{
+				CheckOut = DateTimeOffset.Now
+			}, e => e.Value == Value);
+			Cache.FlushAll();
+			
+		}
+		///end:slot:logic<<<
     }
 }

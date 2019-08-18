@@ -1,5 +1,7 @@
 import React from 'react';
 import { Card, Typography, Grid, AppBar, Toolbar, CardContent, InputBase } from '@material-ui/core';
+import Print from '../Print';
+
 const BadgeCard = props => {
   const badge = props.badge;
   const CheckIn = props.CheckIn;
@@ -25,6 +27,7 @@ const BadgeCard = props => {
           </div>
         </div>
         <div className='Badge__footer'>Molex Juárez México</div>
+        <Print />
       </Card>
     </Grid>
   );

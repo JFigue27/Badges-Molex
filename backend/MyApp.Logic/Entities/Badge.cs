@@ -16,7 +16,6 @@ namespace MyApp.Logic.Entities
         public Badge()
         {
             CheckIn = DateTimeOffset.Now;
-            CheckOut = DateTimeOffset.Now;
             ///start:slot:ctor<<<///end:slot:ctor<<<
         }
 
@@ -27,7 +26,7 @@ namespace MyApp.Logic.Entities
         public string Citizenship { get; set; }
         public string Visiting { get; set; }
         public DateTimeOffset CheckIn { get; set; }
-        public DateTimeOffset CheckOut { get; set; }
+        public DateTimeOffset? CheckOut { get; set; }
 
         ///start:slot:properties<<<///end:slot:properties<<<
     }

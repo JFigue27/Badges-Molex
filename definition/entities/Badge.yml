@@ -7,8 +7,8 @@ fields:
   Company: string
   Citizenship: string
   Visiting: string
-  CheckIn: dateTime
-  CheckOut: dateTime
+  CheckIn: datetime
+  CheckOut: datetime?
 relationships:
   oneToParent: []
   oneToMany: []

@@ -17,11 +17,13 @@ import { InputBase } from '@material-ui/core';
 import { KeyboardDateTimePicker } from '@material-ui/pickers';
 import Dialog from '../../widgets/Dialog';
 import Badge from './badge.js';
+import CheckOut from './checkOut.js';
 import { AppBar, Toolbar } from '@material-ui/core';
 
 import BadgeService from './badge.service';
+///start:slot:dependencies<<<
 import Loader from '../Loader';
-///start:slot:dependencies<<<///end:slot:dependencies<<<
+///end:slot:dependencies<<<
 
 const service = new BadgeService();
 const defaultConfig = {
@@ -51,8 +53,9 @@ class BadgesList extends ListContainer {
   AFTER_CREATE = instance => {
     console.log('AFTER_CREATE', instance);
 
-    ///start:slot:afterCreate<<<
     this.openDialog(instance);
+
+    ///start:slot:afterCreate<<<
     ///end:slot:afterCreate<<<
   };
 
@@ -63,14 +66,17 @@ class BadgesList extends ListContainer {
 
   AFTER_REMOVE = () => {
     console.log('AFTER_REMOVE');
-    ///start:slot:afterRemove<<<///end:slot:afterRemove<<<
+    ///start:slot:afterRemove<<<
+    this.refresh();
+    ///end:slot:afterRemove<<<
   };
 
   ON_OPEN_ITEM = item => {
     console.log('ON_OPEN_ITEM', item);
 
-    ///start:slot:onOpenItem<<<
     this.openDialog(item);
+
+    ///start:slot:onOpenItem<<<
     ///end:slot:onOpenItem<<<
   };
 
@@ -88,13 +94,28 @@ class BadgesList extends ListContainer {
       badge: false
     });
   };
+  openDialogCheckOut = item => {
+    this.setState({
+      checkout: item
+    });
+  };
+
+  closeDialogCheckOut = feedback => {
+    if (feedback == 'ok') {
+      this.refresh();
+    }
+    this.setState({
+      checkout: false
+    });
+    this.refresh();
+  };
   ///start:slot:js<<<///end:slot:js<<<
 
   render() {
     const { isLoading, baseEntity, baseList, filterOptions } = this.state;
+
     if (isLoading) {
       return <Loader />;
-      debugger;
     }
 
     return (
@@ -108,7 +129,7 @@ class BadgesList extends ListContainer {
             <Pagination
               activePage={filterOptions.page}
               itemsCountPerPage={filterOptions.limit}
-              totalItemsCount={filterOptions.totalItems}
+              totalItemsCount={filterOptions.itemsCount}
               pageRangeDisplayed={5}
               onChange={newPage => {
                 this.pageChanged(newPage);
@@ -134,8 +155,8 @@ class BadgesList extends ListContainer {
                 baseList.map(item => (
                   <TableRow key={item.Id}>
                     <TableCell>
-                      <Grid container direction='row' className='row' justify='center' alignItems='flex-start' spacing={2}>
-                        <Grid item xs>
+                      <Grid container direction='row' className='row' justify='center' alignItems='flex-end' spacing={2}>
+                        <Grid item xs={12} sm>
                           <Button
                             variant='contained'
                             color='default'
@@ -146,6 +167,19 @@ class BadgesList extends ListContainer {
                             size='small'
                           >
                             <Icon>edit</Icon>Open
+                          </Button>
+                        </Grid>
+                        <Grid item xs={12} sm>
+                          <Button
+                            variant='contained'
+                            color='default'
+                            className='md-warn md-hue-1'
+                            onClick={event => {
+                              this.removeItem(event, item);
+                            }}
+                            size='small'
+                          >
+                            <Icon>delete</Icon>Remove
                           </Button>
                         </Grid>
                       </Grid>
@@ -229,15 +263,31 @@ class BadgesList extends ListContainer {
             </TableBody>
           </Table>
         </Grid>
-        <Dialog open={!!this.state.badge} onClose={this.closeDialog} draggable title='Visitor Badge' okLabel='Save' maxWidth='md'>
+        <Dialog open={!!this.state.badge} onClose={this.closeDialog} draggable title='Visitor Badge' okLabel='Save'>
           {dialog => {
             return !isLoading && <Badge dialog={dialog} data={this.state.badge} />;
+          }}
+        </Dialog>
+        <Dialog open={!!this.state.checkout} onClose={this.closeDialogCheckOut} draggable title='CheckOut' okLabel='Save'>
+          {dialog => {
+            return !isLoading && <CheckOut dialog={dialog} data={this.state.checkout} />;
           }}
         </Dialog>
         <AppBar position='fixed' style={{ top: 'auto', bottom: 0, background: '#333333' }}>
           <Toolbar variant='dense'>
             <SearchBox bindFilterInput={this.bindFilterInput} value={filterOptions.filterGeneral} />
-            <Grid item xs />
+            <Grid item xs={12} sm />
+            <Button
+              variant='contained'
+              color='default'
+              className=''
+              onClick={event => {
+                this.openDialogCheckOut(event, {});
+              }}
+              size='small'
+            >
+              <Icon>edit</Icon>CheckOut
+            </Button>
             <Button
               variant='contained'
               color='default'

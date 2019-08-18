@@ -71,19 +71,31 @@ namespace MyApp.API
         {
             var entity = request.ConvertTo<Badge>();
             return InTransaction(db => {
-                Logic.Remove(entity);
+                Logic.RemoveById(entity.Id);
                 return new CommonResponse();
             });
         }
         #endregion
 
         #region Endpoints - Specific
-        ///start:slot:endpoints<<<///end:slot:endpoints<<<
+        ///start:slot:endpoints<<<
+		public object Post(CheckOut request)
+		{
+			var entity = request.ConvertTo<Badge>();
+			return InTransaction(db => {
+				Logic.CheckOut(entity.Value);
+				return new CommonResponse();
+			});
+		}
+		///end:slot:endpoints<<<
         #endregion
     }
 
     #region Specific
-    ///start:slot:endpointsRoutes<<<///end:slot:endpointsRoutes<<<
+    ///start:slot:endpointsRoutes<<<
+	[Route("/Badge/CheckOut/{Value}", "POST")]
+	public class CheckOut : Badge { }
+	///end:slot:endpointsRoutes<<<
     #endregion
 
     #region Generic Read Only

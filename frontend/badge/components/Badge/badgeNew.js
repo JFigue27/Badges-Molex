@@ -10,7 +10,7 @@ import BadgeCard from './badgeCard';
 import BadgeService from './badge.service';
 ///start:slot:dependencies<<<
 import { Button, Icon } from '@material-ui/core';
-import Loader from '../Loader';
+
 ///end:slot:dependencies<<<
 
 const service = new BadgeService();

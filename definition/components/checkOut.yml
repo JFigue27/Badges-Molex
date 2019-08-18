@@ -1,0 +1,7 @@
+name: checkOut
+type: form
+entity: Badge
+load: this.load()
+layout:
+  - title: CheckOut
+  - field: Value
