@@ -20,6 +20,7 @@ import Badge from './badge.js';
 import { AppBar, Toolbar } from '@material-ui/core';
 
 import BadgeService from './badge.service';
+import Loader from '../Loader';
 ///start:slot:dependencies<<<///end:slot:dependencies<<<
 
 const service = new BadgeService();
@@ -91,6 +92,10 @@ class BadgesList extends ListContainer {
 
   render() {
     const { isLoading, baseEntity, baseList, filterOptions } = this.state;
+    if (isLoading) {
+      return <Loader />;
+      debugger;
+    }
 
     return (
       <NoSsr>

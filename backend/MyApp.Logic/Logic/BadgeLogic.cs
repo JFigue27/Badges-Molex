@@ -58,8 +58,13 @@ namespace MyApp.Logic
 
         protected override void OnAfterSaving(Badge entity, OPERATION_MODE mode = OPERATION_MODE.NONE)
         {
-            
-            ///start:slot:afterSave<<<///end:slot:afterSave<<<
+
+			///start:slot:afterSave<<<
+			if (entity.Value == "")
+			{
+				throw new Exception("El campo no puede ir sin data");
+			}
+			///end:slot:afterSave<<<
         }
 
         protected override void OnBeforeRemoving(Badge entity)
@@ -70,11 +75,13 @@ namespace MyApp.Logic
 
         protected override IEnumerable<Badge> AdapterOut(params Badge[] entities)
         {
-            ///start:slot:adapterOut<<<///end:slot:adapterOut<<<
+            ///start:slot:adapterOut<<<
+			
+			///end:slot:adapterOut<<<
 
             foreach (var item in entities)
             {
-                
+				
             }
 
             return entities;

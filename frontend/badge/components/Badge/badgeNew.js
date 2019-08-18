@@ -10,7 +10,7 @@ import BadgeCard from './badgeCard';
 import BadgeService from './badge.service';
 ///start:slot:dependencies<<<
 import { Button, Icon } from '@material-ui/core';
-import Router from 'next/router';
+import Loader from '../Loader';
 ///end:slot:dependencies<<<
 
 const service = new BadgeService();
@@ -74,7 +74,7 @@ class BadgeForm extends FormContainer {
 
     return (
       <NoSsr>
-        <Grid className='' container direction='row' justifyContent='center' alignItems='center' item xs={12}>
+        <Grid className='' container direction='row' justify='center' alignItems='center' item xs={12}>
           <Container maxWidth='lg'>
             <Grid container spacing={3} style={{ paddingTop: '10%', paddingLeft: '15%', paddingRight: '15%' }}>
               <Grid item xs={6} style={{ marginTop: 20 }}>
