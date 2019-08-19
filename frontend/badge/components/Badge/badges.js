@@ -263,7 +263,7 @@ class BadgesList extends ListContainer {
             </TableBody>
           </Table>
         </Grid>
-        <Dialog open={!!this.state.badge} onClose={this.closeDialog} draggable title='Visitor Badge' okLabel='Save'>
+        <Dialog open={!!this.state.badge} onClose={this.closeDialog} draggable title='Visitor Badge' okLabel='Save' maxWidth='md'>
           {dialog => {
             return !isLoading && <Badge dialog={dialog} data={this.state.badge} />;
           }}

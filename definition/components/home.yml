@@ -1,0 +1,14 @@
+name: home
+type: list
+entity: Badge
+load: this.load()
+layout:
+  - title: 'WELCOME TO MOLEX JUÁREZ'
+  - button: openDialog | checkout
+  - dialog:
+        id: checkout
+        title: CheckOut
+        ok: Save
+        maxWith: sm
+        content:
+          - component: checkOut

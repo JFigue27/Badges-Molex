@@ -76,9 +76,6 @@ class BadgeForm extends FormContainer {
 
     return (
       <NoSsr>
-        <Typography variant='h3' className='' gutterBottom>
-          CheckOut
-        </Typography>
         <TextField
           type='text'
           label='Barcode'
@@ -88,6 +85,7 @@ class BadgeForm extends FormContainer {
           margin='dense'
           disabled={this.isDisabled}
           fullWidth
+          autoFocus
         />
       </NoSsr>
     );
