@@ -59,7 +59,9 @@ class BadgeForm extends FormContainer {
   };
 
   ///start:slot:js<<<
-  onDialogOk = async () => {
+
+  onDialogOk = async event => {
+    event.preventDefault();
     const { dialog } = this.props;
     await this.service.Post('CheckOut/' + this.state.baseEntity.Value).then(() => {
       this.success('Thanks for Visiting !');
@@ -76,17 +78,19 @@ class BadgeForm extends FormContainer {
 
     return (
       <NoSsr>
-        <TextField
-          type='text'
-          label='Barcode'
-          value={baseEntity.Value || ''}
-          onChange={event => this.handleInputChange(event, 'Value')}
-          style={{ textAlign: 'left' }}
-          margin='dense'
-          disabled={this.isDisabled}
-          fullWidth
-          autoFocus
-        />
+        <form onSubmit={dialog.onOk}>
+          <TextField
+            type='text'
+            label='Barcode'
+            value={baseEntity.Value || ''}
+            onChange={event => this.handleInputChange(event, 'Value')}
+            style={{ textAlign: 'left' }}
+            margin='dense'
+            disabled={this.isDisabled}
+            fullWidth
+            autoFocus
+          />
+        </form>
       </NoSsr>
     );
   }

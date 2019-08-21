@@ -1,36 +1,116 @@
 import React from 'react';
-import { Card, Typography, Grid, AppBar, Toolbar, CardContent, InputBase } from '@material-ui/core';
-import Print from '../Print';
+import { withRouter } from 'next/router';
+import router from 'next/router';
+import { NoSsr, Typography, Grid, Card } from '@material-ui/core';
+import FormContainer from '../../core/FormContainer';
+import { withSnackbar } from 'notistack';
 
-const BadgeCard = props => {
-  const badge = props.badge;
-  const CheckIn = props.CheckIn;
+import BadgeService from './badge.service';
+import PrintBadge from './printBadge';
+///start:slot:dependencies<<<///end:slot:dependencies<<<
 
-  return (
-    <Grid container direction='row' alignItems='center'>
-      <Card style={{ width: 400, textAlign: 'center' }}>
-        <div className='Badge__header'>
-          <img src='/static/images/Molex_White.png' alt='Logo Molex' />
-        </div>
-        <div className='Badge__section-name'>
-          {/* <Gravatar className='Badge__avatar' email={this.props.email} alt='Avatar' /> */}
-          <h1>
-            {badge.FirstName || 'First Name'} <br /> {badge.LastName || 'Last Name'}
-          </h1>
-        </div>
-        <Typography variant='h6'>Valid To: {CheckIn && CheckIn}</Typography>
-        <div className='Badge__section-info'>
-          <h3>{badge.Company || 'Company'}</h3>
-
-          <div>
-            <span style={{ fontWeight: 'bold' }}>Visiting:</span> {badge.Visiting || 'Molex Employee'}
-          </div>
-        </div>
-        <div className='Badge__footer'>Molex Juárez México</div>
-        <Print />
-      </Card>
-    </Grid>
-  );
+const service = new BadgeService();
+const defaultConfig = {
+  service
+  ///start:slot:config<<<///end:slot:config<<<
 };
 
-export default BadgeCard;
+class BadgeForm extends FormContainer {
+  constructor(props, config) {
+    Object.assign(defaultConfig, config);
+    super(props, defaultConfig);
+    ///start:slot:ctor<<<///end:slot:ctor<<<
+  }
+
+  componentDidMount() {
+    console.log('Form did mount');
+    // this.load();
+
+    ///start:slot:didMount<<<
+    if (this.props.router.query.id) {
+      this.load(this.props.router.query.id);
+    } else {
+      let template = this.props.router.query || {};
+      template.Status = 'New';
+      this.load(template);
+    }
+    ///end:slot:didMount<<<
+  }
+
+  AFTER_LOAD = entity => {
+    console.log('AFTER_LOAD', entity);
+    ///start:slot:afterLoad<<<
+    this.setState({
+      printBadge: entity
+    });
+    ///end:slot:afterLoad<<<
+  };
+
+  AFTER_CREATE = instance => {
+    console.log('AFTER_CREATE', instance);
+
+    ///start:slot:afterCreate<<<///end:slot:afterCreate<<<
+  };
+
+  AFTER_CREATE_AND_CHECKOUT = entity => {
+    console.log('AFTER_CREATE_AND_CHECKOUT', entity);
+    ///start:slot:afterCreateCheckout<<<///end:slot:afterCreateCheckout<<<
+  };
+
+  AFTER_SAVE = entity => {
+    console.log('AFTER_SAVE', entity);
+    const { dialog } = this.props;
+    if (dialog) dialog.close('ok');
+    ///start:slot:afterSave<<<///end:slot:afterSave<<<
+  };
+
+  BEFORE_CHECKIN = () => {
+    console.log('BEFORE_CHECKIN');
+    ///start:slot:beforeCheckin<<<///end:slot:beforeCheckin<<<
+  };
+
+  ///start:slot:js<<<
+
+  ///end:slot:js<<<
+
+  render() {
+    const { dialog, badge } = this.props;
+    if (dialog) dialog.onOk = this.onDialogOk;
+    const { isLoading, baseEntity, printBadge } = this.state;
+
+    console.log(printBadge);
+
+    if (badge) {
+      return (
+        <NoSsr>
+          <Grid container direction='row' alignItems='center'>
+            <Card style={{ width: 400, textAlign: 'center' }}>
+              <div className='Badge__header'>
+                <img src='/static/images/Molex_White.png' alt='Logo Molex' />
+              </div>
+              <div className='Badge__section-name'>
+                {/* <Gravatar className='Badge__avatar' email={this.props.email} alt='Avatar' /> */}
+                <h1>
+                  {(badge && badge.FirstName) || 'First Name'} <br /> {(badge && badge.LastName) || 'Last Name'}
+                </h1>
+              </div>
+              <Typography variant='h6'>Valid To: {this.formatDate(badge && badge.CheckIn)}</Typography>
+              <div className='Badge__section-info'>
+                <h3>{(badge && badge.Company) || 'Company'}</h3>
+
+                <div>
+                  <span style={{ fontWeight: 'bold' }}>Visiting:</span> {(badge && badge.Visiting) || 'Molex Employee'}
+                </div>
+              </div>
+              <div className='Badge__footer'>Molex Juárez México</div>
+            </Card>
+          </Grid>
+        </NoSsr>
+      );
+    } else {
+      return <PrintBadge dataBadge={printBadge} CheckIn={this.formatDate(printBadge && printBadge.CheckIn)} />;
+    }
+  }
+}
+
+export default withSnackbar(withRouter(BadgeForm));

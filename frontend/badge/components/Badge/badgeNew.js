@@ -1,16 +1,18 @@
 import React from 'react';
 import { withRouter } from 'next/router';
-import { NoSsr, Typography, Grid, Container } from '@material-ui/core';
+import { NoSsr, Typography, Grid, Link } from '@material-ui/core';
 import FormContainer from '../../core/FormContainer';
 import { withSnackbar } from 'notistack';
 import { TextField } from '@material-ui/core';
 import { InputBase } from '@material-ui/core';
-import BadgeCard from './badgeCard';
+import { Button } from '@material-ui/core';
+import { Icon } from '@material-ui/core';
+import Dialog from '../../widgets/Dialog';
+import BadgeCard from './badgeCard.js';
 
 import BadgeService from './badge.service';
 ///start:slot:dependencies<<<
-import { Button, Icon } from '@material-ui/core';
-
+import { Container } from '@material-ui/core';
 ///end:slot:dependencies<<<
 
 const service = new BadgeService();
@@ -18,6 +20,10 @@ const defaultConfig = {
   service
   ///start:slot:config<<<///end:slot:config<<<
 };
+
+function navigateTo(target) {
+  Router.push(target);
+}
 
 class BadgeForm extends FormContainer {
   constructor(props, config) {
@@ -35,11 +41,16 @@ class BadgeForm extends FormContainer {
 
   AFTER_LOAD = entity => {
     console.log('AFTER_LOAD', entity);
-    ///start:slot:afterLoad<<<///end:slot:afterLoad<<<
+    ///start:slot:afterLoad<<<
+
+    console.log(entity);
+    ///end:slot:afterLoad<<<
   };
 
   AFTER_CREATE = instance => {
     console.log('AFTER_CREATE', instance);
+
+    this.openDialog(instance);
 
     ///start:slot:afterCreate<<<///end:slot:afterCreate<<<
   };
@@ -54,14 +65,34 @@ class BadgeForm extends FormContainer {
     const { dialog } = this.props;
     if (dialog) dialog.close('ok');
     ///start:slot:afterSave<<<
+    this.printBadge(entity);
 
-    this.navigateTo('/badges');
     ///end:slot:afterSave<<<
   };
 
   BEFORE_CHECKIN = () => {
     console.log('BEFORE_CHECKIN');
     ///start:slot:beforeCheckin<<<///end:slot:beforeCheckin<<<
+  };
+
+  openDialog = item => {
+    this.setState({
+      BadgeCard: item
+    });
+  };
+
+  closeDialog = feedback => {
+    if (feedback == 'ok') {
+      this.refresh();
+    }
+    this.setState({
+      BadgeCard: false
+    });
+  };
+
+  printBadge = entity => {
+    // alert('PrintBadge Page' + entity.Id);
+    this.navigateTo('/print-badge?id=' + entity.Id);
   };
 
   ///start:slot:js<<<///end:slot:js<<<
@@ -78,7 +109,7 @@ class BadgeForm extends FormContainer {
           <Container maxWidth='lg'>
             <Grid container spacing={3} style={{ paddingTop: '10%', paddingLeft: '15%', paddingRight: '15%' }}>
               <Grid item xs={6} style={{ marginTop: 20 }}>
-                <BadgeCard badge={baseEntity} CheckIn={this.formatDate(baseEntity.CheckIn)} />
+                <BadgeCard badge={baseEntity} />
               </Grid>
               <Grid item xs={6}>
                 <Typography variant='h5' style={{ textAlign: 'center' }}>

@@ -94,9 +94,9 @@ class BadgesList extends ListContainer {
         </Typography>
         <img src='/static/images/Molex_Red.png' alt='Logo Molex' style={{ width: 220, margin: 30 }} />
         <Button variant='contained' onClick={() => navigateTo('/badge-new')}>
-          New Visitor Badge
+          <Icon style={{ paddingRight: 35 }}>person_add</Icon> New Visitor Badge
         </Button>
-        <img src='/static/images/id-badge-solid.svg' alt='Id-Badge' style={{ width: 150, marginTop: 30 }} />
+        <img src='/static/images/id-badge-solid.svg' alt='Id-Badge' style={{ width: 150, margin: 30 }} />
         <Button
           variant='contained'
           color='default'
@@ -106,12 +106,12 @@ class BadgesList extends ListContainer {
           }}
           size='small'
         >
-          <Icon>edit</Icon>Open
+          <Icon>how_to_reg</Icon> Check Out
         </Button>
-        <Button variant='outlined' onClick={() => navigateTo('/badges')} style={{ marginTop: 30 }}>
+        <Button variant='outlined' onClick={() => navigateTo('/badges')} style={{ marginTop: '3%' }}>
           Visitor Badge History
         </Button>
-        <Dialog open={!!this.state.checkout} onClose={this.closeDialogCheckOut} draggable title='CheckOut' okLabel='Save'>
+        <Dialog open={!!this.state.checkout} onClose={this.closeDialogCheckOut} draggable title='CheckOut'>
           {dialog => {
             return !isLoading && <CheckOut dialog={dialog} data={this.state.checkout} />;
           }}

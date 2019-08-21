@@ -1,0 +1,6 @@
+name: badgeCard
+type: form
+entity: Badge
+load: this.load()
+layout:
+  - title: 'This is the [badgeCard] component.'

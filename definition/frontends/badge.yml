@@ -3,4 +3,5 @@ displayName: Badge
 pages:
   badges: badges
   badge-new: badgeNew
+  print-badge: badgeCard
 components: []

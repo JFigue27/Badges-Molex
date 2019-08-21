@@ -72,7 +72,7 @@ class BadgeForm extends FormContainer {
       <NoSsr>
         <Grid className='' container direction='row' alignItems='center' item xs={12} style={{ padding: 20 }}>
           <Grid item xs={6}>
-            <BadgeCard badge={baseEntity} CheckIn={this.formatDate(baseEntity.CheckIn)} />
+            <BadgeCard badge={baseEntity} />
           </Grid>
           <Grid item xs={6}>
             <Typography variant='h5' style={{ textAlign: 'center' }}>

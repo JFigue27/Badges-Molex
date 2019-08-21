@@ -10,3 +10,11 @@ layout:
       - field: Company
       - field: Citizenship
       - field: Visiting
+  - button: openDialog | badgeCard
+  - dialog:
+      id: BadgeCard
+      title: BadgeCard
+      ok: Save
+      maxWith: sm
+      content:
+        - component: badgeCard
