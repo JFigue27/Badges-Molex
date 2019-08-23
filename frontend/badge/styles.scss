@@ -7,6 +7,8 @@
 @import './node_modules/@syncfusion/ej2-navigations/styles/material.css';
 @import './node_modules/@syncfusion/ej2-popups/styles/material.css';
 @import './node_modules/@syncfusion/ej2-richtexteditor/styles/material.css';
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700');
+@import url('https://fonts.googleapis.com/css?family=Anton');
 
 //Calendar
 @import './node_modules/@syncfusion/ej2-base/styles/material.css';
@@ -17,7 +19,7 @@
 @import './styles-theme.scss';
 
 body {
-  font-family: 'Roboto';
+  font-family: 'Lato', 'Helvetica Neue', sans-serif;
   padding-top: 60px;
   padding-bottom: 120px;
 }

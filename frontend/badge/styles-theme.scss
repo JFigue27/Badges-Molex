@@ -146,7 +146,7 @@
 
 .app-header-primary {
   padding-top: 3%;
-  font-family: !important;
+  font-family: 'Anton', sans-serif !important;
 }
 
 .app-header-secondary {
@@ -239,6 +239,15 @@ img {
 
 .QRCodeBadge {
   margin: 10px;
+}
+
+// OEA and CTPAT images
+
+.oeaImg {
+  width: 200px;
+}
+.ctparImg {
+  width: 250px;
 }
 
 // Footer

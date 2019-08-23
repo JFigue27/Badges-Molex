@@ -111,6 +111,14 @@ class BadgesList extends ListContainer {
         <Button variant='outlined' onClick={() => navigateTo('/badges')} style={{ marginTop: '3%' }}>
           Visitor Badge History
         </Button>
+        <Grid container direction='row' style={{ textAlign: 'center' }} xs={12}>
+          <Grid item xs={6}>
+            <img src='/static/images/oea.png' alt='oea' className='oeaImg' />
+          </Grid>
+          <Grid item xs={6}>
+            <img src='/static/images/ctpat.png' alt='oea' className='ctparImg' />
+          </Grid>
+        </Grid>
         <Dialog open={!!this.state.checkout} onClose={this.closeDialogCheckOut} draggable title='CheckOut'>
           {dialog => {
             return !isLoading && <CheckOut dialog={dialog} data={this.state.checkout} />;

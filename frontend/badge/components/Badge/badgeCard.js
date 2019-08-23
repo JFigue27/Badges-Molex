@@ -98,13 +98,11 @@ class BadgeForm extends FormContainer {
                   <QRCode value={`${badge.Id}`} size={60} />
                 </div>
 
-                <h1>
+                <h1 className='app-header-primary'>
                   {(badge && badge.FirstName) || 'First Name'} <br /> {(badge && badge.LastName) || 'Last Name'}
                 </h1>
               </div>
-              <Typography variant='h6'>
-                Valid Thru: {this.formatDate(badge && badge.CheckIn)} {this.formatTime(badge && badge.CheckIn)}
-              </Typography>
+              <Typography variant='h6'>Valid Thru: {this.formatDate(badge && badge.CheckIn)}</Typography>
               <div className='Badge__section-info'>
                 <h3>{(badge && badge.Company) || 'Company'}</h3>
 
@@ -112,18 +110,13 @@ class BadgeForm extends FormContainer {
                   <span style={{ fontWeight: 'bold' }}>Visiting:</span> {(badge && badge.Visiting) || 'Molex Employee'}
                 </div>
               </div>
-              <div className='Badge__footer'>Molex Juárez México</div>
+              <div className='Badge__footer'>Molex Juárez</div>
             </Card>
           </Grid>
         </NoSsr>
       );
     } else {
-      return (
-        <PrintBadge
-          dataBadge={printBadge}
-          CheckIn={this.formatDate(printBadge && printBadge.CheckIn) + ' ' + this.formatTime(printBadge && printBadge.CheckIn)}
-        />
-      );
+      return <PrintBadge dataBadge={printBadge} CheckIn={this.formatDate(printBadge && printBadge.CheckIn)} />;
     }
   }
 }
