@@ -235,8 +235,58 @@ img {
   width: 100px;
 }
 
+// QRCode
+
+.QRCodeBadge {
+  margin: 10px;
+}
+
 // Footer
 
 .app-footer {
   background-color: #333333;
+}
+
+// @Media Print
+@media print {
+  body {
+    padding: 0 !important;
+  }
+
+  h1 {
+    font-size: 28px;
+    margin-top: 5px;
+  }
+  h3 {
+    font-size: 23px;
+  }
+  h6 {
+    font-size: 15px !important;
+  }
+  .app-nav {
+    .MuiToolbar-regular {
+      display: none;
+    }
+  }
+  .MuiPaper-root {
+    border: 1px solid;
+  }
+  .printBadgeHead {
+    background: #000 !important;
+    height: 43px;
+    img {
+      width: 120px;
+    }
+  }
+  .printSectionInfo {
+    background: #f4f4f7 !important;
+    padding: 2px;
+  }
+  .printButton {
+    display: none !important;
+  }
+
+  .app-printCard {
+    width: 270px !important;
+  }
 }

@@ -52,12 +52,14 @@ namespace MyApp.Logic
 
         protected override void OnBeforeSaving(Badge entity, OPERATION_MODE mode = OPERATION_MODE.NONE)
         {
-            
-            ///start:slot:beforeSave<<<
-			if (string.IsNullOrWhiteSpace(entity.Value))
-			{
-				throw new KnownError("El campo no puede ir sin data");
-			}
+
+			///start:slot:beforeSave<<<
+			//if (string.IsNullOrWhiteSpace(entity.Value))
+			//{
+			//	throw new KnownError("El campo no puede ir sin data");
+			//}
+			entity.CheckIn = DateTimeOffset.Now;
+
 			///end:slot:beforeSave<<<
         }
 
@@ -91,12 +93,12 @@ namespace MyApp.Logic
 
         
         ///start:slot:logic<<<
-		public void CheckOut(string Value)
+		public void CheckOut(long Id)
 		{
 			Db.Update<Badge>(new 
 			{
 				CheckOut = DateTimeOffset.Now
-			}, e => e.Value == Value);
+			}, e => e.Id == Id);
 			Cache.FlushAll();
 			
 		}

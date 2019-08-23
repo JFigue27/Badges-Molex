@@ -80,6 +80,17 @@ class BadgeForm extends FormContainer {
             </Typography>
             <TextField
               type='text'
+              label='ID'
+              value={baseEntity.Id || ''}
+              onChange={event => this.handleInputChange(event, 'Id')}
+              style={{ textAlign: 'left' }}
+              margin='normal'
+              disabled={this.isDisabled}
+              fullWidth
+              variant='outlined'
+            />
+            {/* <TextField
+              type='text'
               label='Barcode'
               value={baseEntity.Value || ''}
               onChange={event => this.handleInputChange(event, 'Value')}
@@ -88,7 +99,7 @@ class BadgeForm extends FormContainer {
               disabled={this.isDisabled}
               fullWidth
               variant='outlined'
-            />
+            /> */}
             <TextField
               type='text'
               label='First Name'
@@ -150,8 +161,8 @@ class BadgeForm extends FormContainer {
               value={baseEntity.ConvertedCheckIn}
               onChange={date => this.handleDateChange(date, 'ConvertedCheckIn')}
               format='MMM/DD/YYYY HH:mm'
-            />
-            <KeyboardDateTimePicker
+            /> */}
+            {/* <KeyboardDateTimePicker
               clearable
               label='CheckOut'
               value={baseEntity.ConvertedCheckOut}

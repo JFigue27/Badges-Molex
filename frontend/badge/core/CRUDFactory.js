@@ -307,7 +307,7 @@ export class CRUDFactory {
     if (date) return moment(date).format(format);
   };
 
-  formatTime = (time, format = 'H:mm a') => {
+  formatTime = (time, format = 'h:mm a') => {
     if (time) return moment(time).format(format);
   };
 

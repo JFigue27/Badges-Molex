@@ -7,7 +7,11 @@ import { withSnackbar } from 'notistack';
 
 import BadgeService from './badge.service';
 import PrintBadge from './printBadge';
-///start:slot:dependencies<<<///end:slot:dependencies<<<
+///start:slot:dependencies<<<
+// import QRCode from 'react-qr-code';
+import QRCode from 'qrcode.react';
+
+///end:slot:dependencies<<<
 
 const service = new BadgeService();
 const defaultConfig = {
@@ -90,11 +94,17 @@ class BadgeForm extends FormContainer {
               </div>
               <div className='Badge__section-name'>
                 {/* <Gravatar className='Badge__avatar' email={this.props.email} alt='Avatar' /> */}
+                <div className='QRCodeBadge'>
+                  <QRCode value={`${badge.Id}`} size={60} />
+                </div>
+
                 <h1>
                   {(badge && badge.FirstName) || 'First Name'} <br /> {(badge && badge.LastName) || 'Last Name'}
                 </h1>
               </div>
-              <Typography variant='h6'>Valid To: {this.formatDate(badge && badge.CheckIn)}</Typography>
+              <Typography variant='h6'>
+                Valid Thru: {this.formatDate(badge && badge.CheckIn)} {this.formatTime(badge && badge.CheckIn)}
+              </Typography>
               <div className='Badge__section-info'>
                 <h3>{(badge && badge.Company) || 'Company'}</h3>
 
@@ -108,7 +118,12 @@ class BadgeForm extends FormContainer {
         </NoSsr>
       );
     } else {
-      return <PrintBadge dataBadge={printBadge} CheckIn={this.formatDate(printBadge && printBadge.CheckIn)} />;
+      return (
+        <PrintBadge
+          dataBadge={printBadge}
+          CheckIn={this.formatDate(printBadge && printBadge.CheckIn) + ' ' + this.formatTime(printBadge && printBadge.CheckIn)}
+        />
+      );
     }
   }
 }

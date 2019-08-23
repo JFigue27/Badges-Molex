@@ -5,7 +5,7 @@ import { Grid } from '@material-ui/core';
 export default () => (
   <App>
     <Grid container direction='row' justify='center' alignContent='center'>
-      <Grid item style={{ marginTop: '10%' }}>
+      <Grid item>
         <BadgeCard />
       </Grid>
     </Grid>

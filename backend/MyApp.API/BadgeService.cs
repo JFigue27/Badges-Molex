@@ -83,7 +83,7 @@ namespace MyApp.API
 		{
 			var entity = request.ConvertTo<Badge>();
 			return InTransaction(db => {
-				Logic.CheckOut(entity.Value);
+				Logic.CheckOut(entity.Id);
 				return new CommonResponse();
 			});
 		}
@@ -93,7 +93,7 @@ namespace MyApp.API
 
     #region Specific
     ///start:slot:endpointsRoutes<<<
-	[Route("/Badge/CheckOut/{Value}", "POST")]
+	[Route("/Badge/CheckOut/{Id}", "POST")]
 	public class CheckOut : Badge { }
 	///end:slot:endpointsRoutes<<<
     #endregion

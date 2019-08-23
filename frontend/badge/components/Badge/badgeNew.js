@@ -65,6 +65,7 @@ class BadgeForm extends FormContainer {
     const { dialog } = this.props;
     if (dialog) dialog.close('ok');
     ///start:slot:afterSave<<<
+
     this.printBadge(entity);
 
     ///end:slot:afterSave<<<
@@ -91,7 +92,7 @@ class BadgeForm extends FormContainer {
   };
 
   printBadge = entity => {
-    // alert('PrintBadge Page' + entity.Id);
+    debugger;
     this.navigateTo('/print-badge?id=' + entity.Id);
   };
 
@@ -115,6 +116,17 @@ class BadgeForm extends FormContainer {
                 <Typography variant='h5' style={{ textAlign: 'center' }}>
                   Visitior Badge Form
                 </Typography>
+                {/* <TextField
+                  type='text'
+                  label='ID'
+                  value={baseEntity.Id || ''}
+                  onChange={event => this.handleInputChange(event, 'Id')}
+                  style={{ textAlign: 'left' }}
+                  margin='dense'
+                  disabled={this.isDisabled}
+                  fullWidth
+                  variant='outlined'
+                />
                 <TextField
                   type='text'
                   label='Barcode'
@@ -125,7 +137,7 @@ class BadgeForm extends FormContainer {
                   disabled={this.isDisabled}
                   fullWidth
                   variant='outlined'
-                />
+                /> */}
                 <TextField
                   type='text'
                   label='FirstName'

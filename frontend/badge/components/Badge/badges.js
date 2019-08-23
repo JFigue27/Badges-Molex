@@ -140,7 +140,8 @@ class BadgesList extends ListContainer {
             <TableHead>
               <TableRow>
                 <TableCell />
-                <TableCell>Barcode</TableCell>
+                <TableCell>ID</TableCell>
+                {/* <TableCell>Barcode</TableCell> */}
                 <TableCell>FirstName</TableCell>
                 <TableCell>LastName</TableCell>
                 <TableCell>Company</TableCell>
@@ -169,7 +170,7 @@ class BadgesList extends ListContainer {
                             <Icon>edit</Icon>Open
                           </Button>
                         </Grid>
-                        <Grid item xs={12} sm>
+                        {/* <Grid item xs={12} sm>
                           <Button
                             variant='contained'
                             color='default'
@@ -181,10 +182,22 @@ class BadgesList extends ListContainer {
                           >
                             <Icon>delete</Icon>Remove
                           </Button>
-                        </Grid>
+                        </Grid> */}
                       </Grid>
                     </TableCell>
                     <TableCell>
+                      <InputBase
+                        type='text'
+                        className=''
+                        autoComplete='off'
+                        disabled={this.isDisabled}
+                        readOnly={true}
+                        onChange={event => this.handleInputChange(event, 'ID')}
+                        value={item.Id || ''}
+                        fullWidth
+                      />
+                    </TableCell>
+                    {/* <TableCell>
                       <InputBase
                         type='text'
                         className=''
@@ -195,7 +208,7 @@ class BadgesList extends ListContainer {
                         value={item.Value || ''}
                         fullWidth
                       />
-                    </TableCell>
+                    </TableCell> */}
                     <TableCell>
                       <InputBase
                         type='text'
@@ -268,7 +281,7 @@ class BadgesList extends ListContainer {
             return !isLoading && <Badge dialog={dialog} data={this.state.badge} />;
           }}
         </Dialog>
-        <Dialog open={!!this.state.checkout} onClose={this.closeDialogCheckOut} draggable title='CheckOut' okLabel='Save'>
+        <Dialog open={!!this.state.checkout} onClose={this.closeDialogCheckOut} draggable title='CheckOut'>
           {dialog => {
             return !isLoading && <CheckOut dialog={dialog} data={this.state.checkout} />;
           }}

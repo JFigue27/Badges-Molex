@@ -185,7 +185,7 @@ class App extends React.Component {
             <div style={{ width: 200 }}>Content</div>
           </div>
         </Drawer>
-        <SnackbarProvider autoHideDuration={1500}>
+        <SnackbarProvider autoHideDuration={1500} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
           <MuiPickersUtilsProvider utils={MomentUtils}>
             <GlobalContext.Provider value={this.state.globals}>
               <Grid container direction='column' alignItems='center' item xs={12} style={{ padding: 10 }}>
