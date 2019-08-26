@@ -92,19 +92,18 @@ class BadgesList extends ListContainer {
         <Typography variant='h3' className='app-header-primary' gutterBottom>
           WELCOME TO MOLEX JUÁREZ
         </Typography>
-        <img src='/static/images/Molex_Red.png' alt='Logo Molex' style={{ width: 230, margin: 30 }} />
-        <Button variant='contained' className='app-btn-1' onClick={() => navigateTo('/badge-new')}>
+        <img src='/static/images/Molex_Red.png' alt='Logo Molex' style={{ width: 280, margin: 40 }} />
+        <Button variant='contained' size='large' className='app-btn-1' onClick={() => navigateTo('/badge-new')}>
           <Icon style={{ paddingRight: 35 }}>person_add</Icon> New Visitor Badge
         </Button>
-        <img src='/static/images/id-badge-solid.svg' alt='Id-Badge' style={{ width: 130, margin: 30 }} />
+        <img src='/static/images/id-badge-solid.svg' alt='Id-Badge' style={{ width: 150, margin: 40 }} />
         <Button
           variant='contained'
+          size='large'
           color='default'
-          className='app-btn-1'
           onClick={event => {
             this.openDialogCheckOut(event, {});
           }}
-          size='small'
           className='app-btn-2'
         >
           <Icon>how_to_reg</Icon> Check Out
@@ -112,12 +111,12 @@ class BadgesList extends ListContainer {
         {/* <Button variant='outlined' onClick={() => navigateTo('/badges')} style={{ marginTop: '3%' }}>
           Visitor Badge History
         </Button> */}
-        <Grid container direction='row' style={{ textAlign: 'center' }} xs={12}>
+        <Grid container direction='row' style={{ textAlign: 'center', marginTop: 50 }} xs={12}>
           <Grid item xs={6}>
             <img src='/static/images/oea.png' alt='oea' className='oeaImg' />
           </Grid>
           <Grid item xs={6}>
-            <img src='/static/images/ctpat.png' alt='oea' className='ctparImg' />
+            <img src='/static/images/ctpat.png' alt='ctpat' className='ctparImg' />
           </Grid>
         </Grid>
         <Dialog open={!!this.state.checkout} onClose={this.closeDialogCheckOut} draggable title='CheckOut'>
