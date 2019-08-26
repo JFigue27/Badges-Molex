@@ -269,8 +269,8 @@ class BadgesList extends ListContainer {
                         fullWidth
                       />
                     </TableCell>
-                    <TableCell>{this.formatDate(item.CheckIn)}</TableCell>
-                    <TableCell>{this.formatDate(item.CheckOut)}</TableCell>
+                    <TableCell style={{ minWidth: 180 }}>{this.formatDate(item.CheckIn) + ' ' + this.formatTime(item.CheckIn)}</TableCell>
+                    <TableCell style={{ minWidth: 180 }}>{this.formatDate(item.CheckOut) + ' ' + this.formatTime(item.CheckOut)}</TableCell>
                   </TableRow>
                 ))}
             </TableBody>

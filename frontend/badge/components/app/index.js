@@ -145,9 +145,9 @@ class App extends React.Component {
           <AppBar position='fixed' className='MainAppBar app-nav'>
             <Toolbar>
               <IconButton color='inherit' onClick={() => navigateTo('/')}>
-                <Icon>home</Icon>
+                {/* <Icon>home</Icon> */}
+                <img src='/static/images/Molex_White.png' alt='Molex Logo' style={{ width: 100, marginRight: 10 }} />
               </IconButton>
-              <img src='/static/images/Molex_White.png' alt='Molex Logo' style={{ width: 100, marginRight: 10 }} />
 
               <Grid item xs />
 

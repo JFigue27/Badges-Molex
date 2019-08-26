@@ -98,11 +98,16 @@
 }
 
 .app-btn-1 {
+  background-color: #616161 !important;
+  color: #fff !important;
   &:hover {
   }
 }
 
 .app-btn-2 {
+  background-color: #b71c1c !important;
+  color: #fff !important;
+  width: 180px;
   &:hover {
   }
 }
@@ -248,6 +253,7 @@ img {
 }
 .ctparImg {
   width: 250px;
+  margin-top: 20px;
 }
 
 // Footer
