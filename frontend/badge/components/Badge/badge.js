@@ -78,7 +78,7 @@ class BadgeForm extends FormContainer {
             <Typography variant='h5' style={{ textAlign: 'center' }}>
               Badge Form
             </Typography>
-            <TextField
+            {/* <TextField
               type='text'
               label='ID'
               value={baseEntity.Id || ''}
@@ -88,7 +88,7 @@ class BadgeForm extends FormContainer {
               disabled={this.isDisabled}
               fullWidth
               variant='outlined'
-            />
+            /> */}
             {/* <TextField
               type='text'
               label='Barcode'

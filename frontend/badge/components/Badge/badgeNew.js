@@ -148,6 +148,7 @@ class BadgeForm extends FormContainer {
                   disabled={this.isDisabled}
                   fullWidth
                   variant='outlined'
+                  autoFocus
                 />
                 <TextField
                   type='text'

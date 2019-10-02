@@ -59,7 +59,7 @@ const Login = props => {
               <div className='botton'>
                 <Fab variant='extended' aria-label='Delete' type='submit'>
                   <Lock />
-                  Inicio de Sesion
+                  Login
                 </Fab>
               </div>
             </CardContent>
