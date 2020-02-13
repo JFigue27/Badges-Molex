@@ -90,7 +90,7 @@ class BadgesList extends ListContainer {
     return (
       <NoSsr>
         <Typography variant='h3' className='app-header-primary' gutterBottom>
-          WELCOME TO MOLEX JUÁREZ
+          WELCOME TO MOLEX
         </Typography>
         <img src='/static/images/Molex_Red.png' alt='Logo Molex' style={{ width: 280, margin: 40 }} />
         <Button variant='contained' size='large' className='app-btn-1' onClick={() => navigateTo('/badge-new')}>
@@ -112,10 +112,7 @@ class BadgesList extends ListContainer {
           Visitor Badge History
         </Button> */}
         <Grid container direction='row' style={{ textAlign: 'center', marginTop: 50 }} xs={12}>
-          <Grid item xs={6}>
-            <img src='/static/images/oea.png' alt='oea' className='oeaImg' />
-          </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <img src='/static/images/ctpat.png' alt='ctpat' className='ctparImg' />
           </Grid>
         </Grid>
@@ -127,7 +124,7 @@ class BadgesList extends ListContainer {
         <AppBar style={{ top: 'auto', bottom: 0, background: '#333333' }}>
           <Toolbar>
             <Grid container direction='column' alignItems='center'>
-              <Typography> © 2019 | Visitor Badge System By Molex Juárez </Typography>
+              <Typography> © 2020 | Visitor Badge System By Molex</Typography>
             </Grid>
           </Toolbar>
         </AppBar>

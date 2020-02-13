@@ -110,7 +110,7 @@ class BadgeForm extends FormContainer {
                   <span style={{ fontWeight: 'bold' }}>Visiting:</span> {(badge && badge.Visiting) || 'Molex Employee'}
                 </div>
               </div>
-              <div className='Badge__footer'>Molex Juárez</div>
+              <div className='Badge__footer'>Molex</div>
             </Card>
           </Grid>
         </NoSsr>

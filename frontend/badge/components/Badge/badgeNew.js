@@ -140,7 +140,7 @@ class BadgeForm extends FormContainer {
                 /> */}
                 <TextField
                   type='text'
-                  label='FirstName'
+                  label='First Name'
                   value={baseEntity.FirstName || ''}
                   onChange={event => this.handleInputChange(event, 'FirstName')}
                   style={{ textAlign: 'left' }}
@@ -152,7 +152,7 @@ class BadgeForm extends FormContainer {
                 />
                 <TextField
                   type='text'
-                  label='LastName'
+                  label='Last Name'
                   value={baseEntity.LastName || ''}
                   onChange={event => this.handleInputChange(event, 'LastName')}
                   style={{ textAlign: 'left' }}

@@ -1,5 +1,8 @@
 {
   "version": 2,
-  "name": "Badges Molex",
-  "builds": [{ "src": "package.json", "use": "@now/next" }]
+  "name": "Badges Molex El Paso",
+  "builds": [{
+    "src": "package.json",
+    "use": "@now/next"
+  }]
 }
