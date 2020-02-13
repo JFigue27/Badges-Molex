@@ -11,9 +11,6 @@ const PrintBadge = props => {
   return (
     <Grid container direction='column' alignItems='center'>
       <Card style={{ width: 400, textAlign: 'center' }} className='app-printCard'>
-        {/* <div className='QRCodeBadge'>
-          <QRCode value={`${dataBadge && dataBadge.FirstName + ' ' + '#' + dataBadge.Id + ' ' + props.CheckIn}`} size={50} />
-        </div> */}
         <div className='Badge__header printBadgeHead'>
           <img src='/static/images/Molex_White.png' alt='Logo Molex' />
         </div>
@@ -34,7 +31,7 @@ const PrintBadge = props => {
             <span style={{ fontWeight: 'bold' }}>Visiting:</span> {(dataBadge && dataBadge.Visiting) || 'Molex Employee'}
           </div>
         </div>
-        <div className='Badge__footer'>Molex Juárez</div>
+        <div className='Badge__footer'>Molex</div>
       </Card>
       <Button
         fullWidth
