@@ -1,7 +1,18 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { withRouter } from 'next/router';
-import { Drawer, AppBar, Toolbar, IconButton, Typography, Menu, MenuItem, Grid, Tabs, Tab } from '@material-ui/core';
+import {
+  Drawer,
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  Menu,
+  MenuItem,
+  Grid,
+  Tabs,
+  Tab,
+} from '@material-ui/core';
 import { Button, Icon, Fab } from '@material-ui/core';
 import Dialog from '../../widgets/Dialog';
 import AuthService from '../../core/AuthService';
@@ -34,20 +45,20 @@ class App extends React.Component {
     currentTab: 0,
     loginOpen: false,
     loading: true,
-    globals: {}
+    globals: {},
   };
 
   classes = {
     root: {
-      flexGrow: 1
+      flexGrow: 1,
     },
     grow: {
-      flexGrow: 1
+      flexGrow: 1,
     },
     menuButton: {
       marginLeft: -12,
-      marginRight: 20
-    }
+      marginRight: 20,
+    },
   };
 
   componentDidMount() {
@@ -58,35 +69,44 @@ class App extends React.Component {
     }
 
     let currentPath = window.location.pathname;
-    let findRoute = this.pages.findIndex(e => e.href.toLowerCase() == currentPath.toLowerCase());
+    let findRoute = this.pages.findIndex(
+      (e) => e.href.toLowerCase() == currentPath.toLowerCase()
+    );
 
     this.setState({
       loading: false,
       auth: AuthService.auth,
       currentTab: findRoute,
-      globals: { auth: AuthService.auth }
+      globals: { auth: AuthService.auth },
     });
   }
   openLoginDialog = () => {
     this.setState({ loginOpen: true });
   };
   closeLoginDialog = () => {
-    this.setState({ loginOpen: false, auth: AuthService.auth, globals: { auth: AuthService.auth } });
+    this.setState({
+      loginOpen: false,
+      auth: AuthService.auth,
+      globals: { auth: AuthService.auth },
+    });
   };
 
   logout = () => {
     AuthService.logout().then(() => {
-      this.setState({ auth: AuthService.auth, globals: { auth: AuthService.auth } });
+      this.setState({
+        auth: AuthService.auth,
+        globals: { auth: AuthService.auth },
+      });
     });
     this.openLoginDialog();
   };
 
   toggleDrawer = (side, open) => () => {
     this.setState({
-      [side]: open
+      [side]: open,
     });
   };
-  handleMenu = event => {
+  handleMenu = (event) => {
     this.setState({ anchorEl: event.currentTarget });
   };
   handleClose = () => {
@@ -107,7 +127,7 @@ class App extends React.Component {
       let { href } = props;
       return (
         <Link href={href} passHref>
-          <Tab component='a' {...props} />
+          <Tab component="a" {...props} />
         </Link>
       );
     }
@@ -124,12 +144,21 @@ class App extends React.Component {
         </style>
         <Head>
           <title>Badge</title>
-          <meta charSet='utf-8' />
-          <meta name='viewport' content='minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no' />
-          <link rel='stylesheet' href='/static/styles/bootstrap.css' />
-          <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500' />
-          <link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons' />
-          <link rel='icon' type='image/x-icon' href='/static/favicon.ico' />
+          <meta charSet="utf-8" />
+          <meta
+            name="viewport"
+            content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
+          />
+          <link rel="stylesheet" href="/static/styles/bootstrap.css" />
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
+          />
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          />
+          <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
           <style>
             {`
               body {
@@ -138,38 +167,71 @@ class App extends React.Component {
               `}
           </style>
         </Head>
-        <Dialog open={this.state.loginOpen} onClose={this.closeLoginDialog} fullScreen actionsOff>
-          {() => <Login onCloseLogin={this.closeLoginDialog} />}
-        </Dialog>
+        {this.state.loginOpen && (
+          <Dialog
+            open={this.state.loginOpen}
+            onClose={this.closeLoginDialog}
+            fullScreen
+            actionsOff
+          >
+            {() => <Login onCloseLogin={this.closeLoginDialog} />}
+          </Dialog>
+        )}
         {!fullscreen && (
-          <AppBar position='fixed' className='MainAppBar app-nav'>
+          <AppBar position="fixed" className="MainAppBar app-nav">
             <Toolbar>
-              <IconButton color='inherit' onClick={() => navigateTo('/')}>
+              <IconButton color="inherit" onClick={() => navigateTo('/')}>
                 {/* <Icon>home</Icon> */}
-                <img src='/static/images/Molex_White.png' alt='Molex Logo' style={{ width: 100, marginRight: 10 }} />
+                <img
+                  src="/static/images/logo-bedel.png"
+                  alt="Bedel Logo"
+                  style={{
+                    width: 140,
+                    height: 40,
+                    backgroundColor: 'white',
+                    borderRadius: 5,
+                    padding: 2,
+                  }}
+                />
               </IconButton>
 
-              <Grid item xs />
+              <Grid item xs={12} />
 
-              <Tabs variant='standard' value={this.state.currentTab} onChange={this.handleTabsChange}>
-                {this.pages.map(page => {
-                  return <LinkTab key={page.label} label={page.label} href={page.href} />;
+              <Tabs
+                variant="standard"
+                value={this.state.currentTab}
+                onChange={this.handleTabsChange}
+              >
+                {this.pages.map((page) => {
+                  return (
+                    <LinkTab
+                      key={page.label}
+                      label={page.label}
+                      href={page.href}
+                    />
+                  );
                 })}
               </Tabs>
-              <Button color='inherit' className={classes.button} onClick={this.handleMenu}>
+              <Button
+                color="inherit"
+                className={classes.button}
+                onClick={this.handleMenu}
+              >
                 <Icon style={{ marginRight: 5 }}>account_circle</Icon>
-                {auth && auth.user && (auth.user.DisplayName || auth.user.UserName)}
+                {auth &&
+                  auth.user &&
+                  (auth.user.DisplayName || auth.user.UserName)}
               </Button>
               <Menu
-                id='menu-appbar'
+                id="menu-appbar"
                 anchorEl={anchorEl}
                 anchorOrigin={{
                   vertical: 'top',
-                  horizontal: 'right'
+                  horizontal: 'right',
                 }}
                 transformOrigin={{
                   vertical: 'top',
-                  horizontal: 'right'
+                  horizontal: 'right',
                 }}
                 open={open}
                 onClose={this.handleClose}
@@ -180,15 +242,34 @@ class App extends React.Component {
             </Toolbar>
           </AppBar>
         )}
-        <Drawer anchor='left' open={this.state.right} onClose={this.toggleDrawer('right', false)}>
-          <div tabIndex={0} role='button' onClick={this.toggleDrawer('right', false)} onKeyDown={this.toggleDrawer('right', false)}>
+        <Drawer
+          anchor="left"
+          open={this.state.right}
+          onClose={this.toggleDrawer('right', false)}
+        >
+          <div
+            tabIndex={0}
+            role="button"
+            onClick={this.toggleDrawer('right', false)}
+            onKeyDown={this.toggleDrawer('right', false)}
+          >
             <div style={{ width: 200 }}>Content</div>
           </div>
         </Drawer>
-        <SnackbarProvider autoHideDuration={1500} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+        <SnackbarProvider
+          autoHideDuration={1500}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        >
           <MuiPickersUtilsProvider utils={MomentUtils}>
             <GlobalContext.Provider value={this.state.globals}>
-              <Grid container direction='column' alignItems='center' item xs={12} style={{ padding: 10 }}>
+              <Grid
+                container
+                direction="column"
+                alignItems="center"
+                item
+                xs={12}
+                style={{ padding: 10 }}
+              >
                 {this.props.children}
               </Grid>
             </GlobalContext.Provider>

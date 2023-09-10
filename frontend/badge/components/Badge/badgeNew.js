@@ -17,7 +17,7 @@ import { Container } from '@material-ui/core';
 
 const service = new BadgeService();
 const defaultConfig = {
-  service
+  service,
   ///start:slot:config<<<///end:slot:config<<<
 };
 
@@ -39,7 +39,7 @@ class BadgeForm extends FormContainer {
     ///start:slot:didMount<<<///end:slot:didMount<<<
   }
 
-  AFTER_LOAD = entity => {
+  AFTER_LOAD = (entity) => {
     console.log('AFTER_LOAD', entity);
     ///start:slot:afterLoad<<<
 
@@ -47,7 +47,7 @@ class BadgeForm extends FormContainer {
     ///end:slot:afterLoad<<<
   };
 
-  AFTER_CREATE = instance => {
+  AFTER_CREATE = (instance) => {
     console.log('AFTER_CREATE', instance);
 
     this.openDialog(instance);
@@ -55,12 +55,12 @@ class BadgeForm extends FormContainer {
     ///start:slot:afterCreate<<<///end:slot:afterCreate<<<
   };
 
-  AFTER_CREATE_AND_CHECKOUT = entity => {
+  AFTER_CREATE_AND_CHECKOUT = (entity) => {
     console.log('AFTER_CREATE_AND_CHECKOUT', entity);
     ///start:slot:afterCreateCheckout<<<///end:slot:afterCreateCheckout<<<
   };
 
-  AFTER_SAVE = entity => {
+  AFTER_SAVE = (entity) => {
     console.log('AFTER_SAVE', entity);
     const { dialog } = this.props;
     if (dialog) dialog.close('ok');
@@ -76,23 +76,23 @@ class BadgeForm extends FormContainer {
     ///start:slot:beforeCheckin<<<///end:slot:beforeCheckin<<<
   };
 
-  openDialog = item => {
+  openDialog = (item) => {
     this.setState({
-      BadgeCard: item
+      BadgeCard: item,
     });
   };
 
-  closeDialog = feedback => {
+  closeDialog = (feedback) => {
     if (feedback == 'ok') {
       this.refresh();
     }
     this.setState({
-      BadgeCard: false
+      BadgeCard: false,
     });
   };
 
-  printBadge = entity => {
-    debugger;
+  printBadge = (entity) => {
+    // debugger;
     this.navigateTo('/print-badge?id=' + entity.Id);
   };
 
@@ -106,14 +106,30 @@ class BadgeForm extends FormContainer {
 
     return (
       <NoSsr>
-        <Grid className='' container direction='row' justify='center' alignItems='center' item xs={12}>
-          <Container maxWidth='lg'>
-            <Grid container spacing={3} style={{ paddingTop: '10%', paddingLeft: '15%', paddingRight: '15%' }}>
+        <Grid
+          className=""
+          container
+          direction="row"
+          justify="center"
+          alignItems="center"
+          item
+          xs={12}
+        >
+          <Container maxWidth="lg">
+            <Grid
+              container
+              spacing={3}
+              style={{
+                paddingTop: '10%',
+                // paddingLeft: '15%',
+                // paddingRight: '15%',
+              }}
+            >
               <Grid item xs={6} style={{ marginTop: 20 }}>
                 <BadgeCard badge={baseEntity} />
               </Grid>
               <Grid item xs={6}>
-                <Typography variant='h5' style={{ textAlign: 'center' }}>
+                <Typography variant="h5" style={{ textAlign: 'center' }}>
                   Visitior Badge Form
                 </Typography>
                 {/* <TextField
@@ -139,67 +155,75 @@ class BadgeForm extends FormContainer {
                   variant='outlined'
                 /> */}
                 <TextField
-                  type='text'
-                  label='FirstName'
+                  type="text"
+                  label="FirstName"
                   value={baseEntity.FirstName || ''}
-                  onChange={event => this.handleInputChange(event, 'FirstName')}
+                  onChange={(event) =>
+                    this.handleInputChange(event, 'FirstName')
+                  }
                   style={{ textAlign: 'left' }}
-                  margin='dense'
+                  margin="dense"
                   disabled={this.isDisabled}
                   fullWidth
-                  variant='outlined'
+                  variant="outlined"
                   autoFocus
                 />
                 <TextField
-                  type='text'
-                  label='LastName'
+                  type="text"
+                  label="LastName"
                   value={baseEntity.LastName || ''}
-                  onChange={event => this.handleInputChange(event, 'LastName')}
+                  onChange={(event) =>
+                    this.handleInputChange(event, 'LastName')
+                  }
                   style={{ textAlign: 'left' }}
-                  margin='dense'
+                  margin="dense"
                   disabled={this.isDisabled}
                   fullWidth
-                  variant='outlined'
+                  variant="outlined"
                 />
                 <TextField
-                  type='text'
-                  label='Company'
+                  type="text"
+                  label="Company"
                   value={baseEntity.Company || ''}
-                  onChange={event => this.handleInputChange(event, 'Company')}
+                  onChange={(event) => this.handleInputChange(event, 'Company')}
                   style={{ textAlign: 'left' }}
-                  margin='dense'
+                  margin="dense"
                   disabled={this.isDisabled}
                   fullWidth
-                  variant='outlined'
+                  variant="outlined"
                 />
                 <TextField
-                  type='text'
-                  label='Citizenship'
+                  type="text"
+                  label="Citizenship"
                   value={baseEntity.Citizenship || ''}
-                  onChange={event => this.handleInputChange(event, 'Citizenship')}
+                  onChange={(event) =>
+                    this.handleInputChange(event, 'Citizenship')
+                  }
                   style={{ textAlign: 'left' }}
-                  margin='dense'
+                  margin="dense"
                   disabled={this.isDisabled}
                   fullWidth
-                  variant='outlined'
+                  variant="outlined"
                 />
                 <TextField
-                  type='text'
-                  label='Visiting'
+                  type="text"
+                  label="Visiting"
                   value={baseEntity.Visiting || ''}
-                  onChange={event => this.handleInputChange(event, 'Visiting')}
+                  onChange={(event) =>
+                    this.handleInputChange(event, 'Visiting')
+                  }
                   style={{ textAlign: 'left' }}
-                  margin='dense'
+                  margin="dense"
                   disabled={this.isDisabled}
                   fullWidth
-                  variant='outlined'
+                  variant="outlined"
                 />
                 <Grid item />
                 <Button
-                  variant='contained'
-                  color='default'
-                  className='btn-primary'
-                  onClick={event => {
+                  variant="contained"
+                  color="default"
+                  className="btn-primary"
+                  onClick={(event) => {
                     this.save(event, {});
                   }}
                   fullWidth

@@ -5,6 +5,7 @@ import AuthService from '../core/AuthService';
 
 const Request = async (method, url, data, BaseURL) => {
   if (AuthService.auth == null) AuthService.fillAuthData();
+  console.log('Request', AuthService.auth);
 
   const config = {
     method: method,
@@ -12,11 +13,13 @@ const Request = async (method, url, data, BaseURL) => {
     cache: 'no-cache',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${AuthService.auth.user.BearerToken}`
-    }
+      Authorization: `Bearer ${AuthService.auth.user.BearerToken}`,
+    },
   };
-  if (['POST', 'PUT', 'DELETE'].includes(method)) config.body = JSON.stringify(data);
+  if (['POST', 'PUT', 'DELETE'].includes(method))
+    config.body = JSON.stringify(data);
   let response;
+  console.log('Request', (BaseURL || AppConfig.BaseURL) + url, config);
   try {
     response = await fetch((BaseURL || AppConfig.BaseURL) + url, config);
   } catch (e) {
@@ -28,10 +31,14 @@ const Request = async (method, url, data, BaseURL) => {
   return await response.json();
 };
 
-const Get = async (url, data, baseURL) => await Request('GET', url, data, baseURL);
-const Post = async (url, data, baseURL) => await Request('POST', url, data, baseURL);
-const Put = async (url, data, baseURL) => await Request('PUT', url, data, baseURL);
-const Delete = async (url, data, baseURL) => await Request('DELETE', url, data, baseURL);
+const Get = async (url, data, baseURL) =>
+  await Request('GET', url, data, baseURL);
+const Post = async (url, data, baseURL) =>
+  await Request('POST', url, data, baseURL);
+const Put = async (url, data, baseURL) =>
+  await Request('PUT', url, data, baseURL);
+const Delete = async (url, data, baseURL) =>
+  await Request('DELETE', url, data, baseURL);
 
 export class CRUDFactory {
   constructor(config) {
@@ -41,56 +48,57 @@ export class CRUDFactory {
 
   async InsertEntity(entity) {
     this.ADAPTER_OUT(entity);
+    // debugger;
     return await Post(this.EndPoint, entity)
-      .then(r => this.UseCommonResponse(r))
+      .then((r) => this.UseCommonResponse(r))
       .catch(this.GeneralError);
   }
 
   async CreateAndCheckout(entity) {
     this.ADAPTER_OUT(entity);
     return await Post(this.EndPoint + '/CreateAndCheckout', entity)
-      .then(r => this.UseCommonResponse(r))
+      .then((r) => this.UseCommonResponse(r))
       .catch(this.GeneralError);
   }
 
   async Checkout(entity) {
     return await Post(this.EndPoint + '/Checkout/' + entity.Id)
-      .then(r => this.UseCommonResponse(r))
+      .then((r) => this.UseCommonResponse(r))
       .catch(this.GeneralError);
   }
 
   async CancelCheckout(entity) {
     return await Post(this.EndPoint + '/CancelCheckout/' + entity.Id)
-      .then(r => this.UseCommonResponse(r))
+      .then((r) => this.UseCommonResponse(r))
       .catch(this.GeneralError);
   }
 
   async Checkin(entity) {
     return await Post(this.EndPoint + '/Checkin', entity)
-      .then(r => this.UseCommonResponse(r))
+      .then((r) => this.UseCommonResponse(r))
       .catch(this.GeneralError);
   }
 
-  Checkin = async entity =>
+  Checkin = async (entity) =>
     await Post(this.EndPoint + '/Checkin', entity)
-      .then(r => this.UseCommonResponse(r))
+      .then((r) => this.UseCommonResponse(r))
       .catch(this.GeneralError);
 
   async MakeRevision(entity) {
     return await Post(this.EndPoint + '/MakeRevision', entity)
-      .then(r => this.UseCommonResponse(r))
+      .then((r) => this.UseCommonResponse(r))
       .catch(this.GeneralError);
   }
 
   async Duplicate(entity) {
     return await Post(this.EndPoint + '/Duplicate', entity)
-      .then(r => this.UseCommonResponse(r))
+      .then((r) => this.UseCommonResponse(r))
       .catch(this.GeneralError);
   }
 
   async CreateInstance(entity) {
     return await Post(this.EndPoint + '/CreateInstance', entity)
-      .then(r => this.UseCommonResponse(r))
+      .then((r) => this.UseCommonResponse(r))
       .catch(this.GeneralError);
   }
 
@@ -99,23 +107,50 @@ export class CRUDFactory {
   }
 
   async Post(operation, entity = {}) {
-    return await Post(this.EndPoint + '/' + operation, entity).catch(this.GeneralError);
+    return await Post(this.EndPoint + '/' + operation, entity).catch(
+      this.GeneralError
+    );
   }
 
   async GetPaged(limit, page, params = '?') {
-    return await Get(this.EndPoint + '/getPaged/' + limit + '/' + page + params + '&noCache=' + Number(new Date()))
-      .then(r => this.UseCommonResponse(r, true))
+    return await Get(
+      this.EndPoint +
+        '/getPaged/' +
+        limit +
+        '/' +
+        page +
+        params +
+        '&noCache=' +
+        Number(new Date())
+    )
+      .then((r) => this.UseCommonResponse(r, true))
       .catch(this.GeneralError);
   }
 
   async GetSingleWhere(property, value, params = '') {
     if (property && value) {
-      return await Get(this.EndPoint + '/GetSingleWhere/' + property + '/' + value + '?' + params + '&noCache=' + Number(new Date()))
-        .then(r => this.UseNudeResponse(r))
+      return await Get(
+        this.EndPoint +
+          '/GetSingleWhere/' +
+          property +
+          '/' +
+          value +
+          '?' +
+          params +
+          '&noCache=' +
+          Number(new Date())
+      )
+        .then((r) => this.UseNudeResponse(r))
         .catch(this.GeneralError);
     } else if (params.length > 1) {
-      return await Get(this.EndPoint + '/GetSingleWhere?' + params + '&noCache=' + Number(new Date()))
-        .then(r => this.UseNudeResponse(r))
+      return await Get(
+        this.EndPoint +
+          '/GetSingleWhere?' +
+          params +
+          '&noCache=' +
+          Number(new Date())
+      )
+        .then((r) => this.UseNudeResponse(r))
         .catch(this.GeneralError);
     } else {
       return Promise.reject('Invalid params for GetSingleWhere.');
@@ -124,14 +159,14 @@ export class CRUDFactory {
 
   async LoadEntities(params = '?') {
     return await Get(this.EndPoint + params + '&noCache=' + Number(new Date()))
-      .then(r => this.UseNudeResponse(r))
+      .then((r) => this.UseNudeResponse(r))
       .catch(this.GeneralError);
   }
 
   async LoadEntity(id) {
     if (id) {
       return await Get(this.EndPoint + '/' + id)
-        .then(r => this.UseNudeResponse(r))
+        .then((r) => this.UseNudeResponse(r))
         .catch(this.GeneralError);
     } else {
       return Promise.reject('Id not found');
@@ -140,27 +175,30 @@ export class CRUDFactory {
 
   async Remove(entity) {
     return await Delete(this.EndPoint, entity)
-      .then(r => this.UseCommonResponse(r))
+      .then((r) => this.UseCommonResponse(r))
       .catch(this.GeneralError);
   }
 
   async RemoveById(id) {
     return await Delete(this.EndPoint + '/' + id)
-      .then(r => this.UseCommonResponse(r))
+      .then((r) => this.UseCommonResponse(r))
       .catch(this.GeneralError);
   }
 
   async Save(entity) {
+    // debugger;
     if (entity.Id > 0) {
+      // debugger;
       return await this.UpdateEntity(entity);
     } else {
+      // debugger;
       return await this.InsertEntity(entity);
     }
   }
 
   async SendTestEmail(entity) {
     return await Post(this.EndPoint + '/SendTestEmail', entity)
-      .then(r => this.UseCommonResponse(r))
+      .then((r) => this.UseCommonResponse(r))
       .catch(this.GeneralError);
   }
 
@@ -171,7 +209,7 @@ export class CRUDFactory {
   async UpdateEntity(entity) {
     this.ADAPTER_OUT(entity);
     return await Put(this.EndPoint, entity)
-      .then(r => this.UseCommonResponse(r))
+      .then((r) => this.UseCommonResponse(r))
       .catch(this.GeneralError);
   }
 
@@ -205,7 +243,9 @@ export class CRUDFactory {
   populateCatalogValues(entity) {
     for (let catalog in this.catalogs) {
       if (this.catalogs.hasOwnProperty(catalog)) {
-        entity['' + catalog] = this.catalogs[catalog].getById(entity['' + catalog + 'Key']);
+        entity['' + catalog] = this.catalogs[catalog].getById(
+          entity['' + catalog + 'Key']
+        );
       }
     }
   }
@@ -219,7 +259,7 @@ export class CRUDFactory {
 
     //Call Adapter In Hook:
     if (Array.isArray(response.Result)) {
-      response.Result.forEach(entity => this.ADAPTER_IN(entity));
+      response.Result.forEach((entity) => this.ADAPTER_IN(entity));
     } else if (typeof response.Result === 'object') {
       this.ADAPTER_IN(response.Result);
     }
@@ -238,7 +278,7 @@ export class CRUDFactory {
 
     //Call Adapter In Hook:
     if (Array.isArray(response.Result)) {
-      response.Result.forEach(entity => this.ADAPTER_IN(entity));
+      response.Result.forEach((entity) => this.ADAPTER_IN(entity));
     } else if (typeof response.Result === 'object') {
       this.ADAPTER_IN(response.Result);
     }
@@ -250,10 +290,10 @@ export class CRUDFactory {
     return response.Result;
   };
 
-  UseNudeResponse = response => {
+  UseNudeResponse = (response) => {
     //Call Adapter In Hook:
     if (Array.isArray(response.Result)) {
-      response.forEach(entity => this.ADAPTER_IN(entity));
+      response.forEach((entity) => this.ADAPTER_IN(entity));
     } else if (typeof response === 'object') {
       this.ADAPTER_IN(response);
     }
@@ -262,7 +302,7 @@ export class CRUDFactory {
     return response;
   };
 
-  GeneralError = response => {
+  GeneralError = (response) => {
     //CommonResponse wrapper
     if (response.ErrorThrown) {
       switch (response.ErrorType) {
@@ -311,7 +351,7 @@ export class CRUDFactory {
     if (time) return moment(time).format(format);
   };
 
-  toServerDate = date => {
+  toServerDate = (date) => {
     var momentDate = moment(date || null);
     if (momentDate.isValid()) {
       momentDate.local();
@@ -322,7 +362,9 @@ export class CRUDFactory {
 
   formatCurrency = (number, decimals = 2) => {
     if (!isNaN(number) && number > 0) {
-      return new Intl.NumberFormat('en-IN', { maximumFractionDigits: decimals }).format(number);
+      return new Intl.NumberFormat('en-IN', {
+        maximumFractionDigits: decimals,
+      }).format(number);
     }
     return '';
   };
@@ -338,19 +380,32 @@ export class CRUDFactory {
 
   //Catalogs:====================================================================
   async GetCatalog(name, params = '', limit = 0, page = 1) {
-    return await Get(`catalog/${limit}/${page}?name=${name}&${params}&noCache=` + Number(new Date()))
-      .then(r => r.Result)
+    return await Get(
+      `catalog/${limit}/${page}?name=${name}&${params}&noCache=` +
+        Number(new Date())
+    )
+      .then((r) => r.Result)
       .catch(this.GeneralError);
   }
 
   async GetUniversalCatalog(name, params = '', limit = 0, page = 1) {
-    return await Get(`catalog/${limit}/${page}?name=${name}&${params}&noCache=${Number(new Date())}`, null, AppConfig.UniversalCatalogsURL)
-      .then(r => r.Result)
+    return await Get(
+      `catalog/${limit}/${page}?name=${name}&${params}&noCache=${Number(
+        new Date()
+      )}`,
+      null,
+      AppConfig.UniversalCatalogsURL
+    )
+      .then((r) => r.Result)
       .catch(this.GeneralError);
   }
 
   //Accounts:===================================================================
   async GetAccounts(params = '') {
-    return await Get('Account?' + params + '&noCache=' + Number(new Date()), null, AppConfig.AuthURL).catch(this.GeneralError);
+    return await Get(
+      'Account?' + params + '&noCache=' + Number(new Date()),
+      null,
+      AppConfig.AuthURL
+    ).catch(this.GeneralError);
   }
 }

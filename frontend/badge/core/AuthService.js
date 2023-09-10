@@ -7,9 +7,9 @@ const request = async (method, endpoint, data) => {
     mode: 'cors',
     cache: 'no-cache',
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
     },
-    data
+    data,
   });
 };
 
@@ -26,10 +26,10 @@ export default class AuthService {
       if (!response.ok) throw 'Invalid';
       let userAuth = await response.json();
       AuthService.auth = {
-        user: userAuth
+        user: userAuth,
       };
       localStorage.setItem('auth', JSON.stringify(AuthService.auth));
-      AuthService.ON_LOGIN();
+      // AuthService.ON_LOGIN();
       return AuthService.auth;
     } catch (e) {
       console.log(e);
@@ -40,7 +40,7 @@ export default class AuthService {
   static logout = async () => {
     localStorage.removeItem('auth');
     AuthService.auth = null;
-    await request('GET', 'auth/logout').then(r => {
+    await request('GET', 'auth/logout').then((r) => {
       console.log(r);
     });
   };

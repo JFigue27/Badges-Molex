@@ -17,7 +17,7 @@ import Router from 'next/router';
 
 const service = new BadgeService();
 const defaultConfig = {
-  service
+  service,
   ///start:slot:config<<<///end:slot:config<<<
 };
 
@@ -35,19 +35,19 @@ class BadgesList extends ListContainer {
     ///start:slot:didMount<<<///end:slot:didMount<<<
   }
 
-  AFTER_LOAD = baseList => {
+  AFTER_LOAD = (baseList) => {
     console.log('AFTER_LOAD');
     ///start:slot:afterLoad<<<///end:slot:afterLoad<<<
   };
 
-  AFTER_CREATE = instance => {
+  AFTER_CREATE = (instance) => {
     console.log('AFTER_CREATE', instance);
     this.openDialog(instance);
 
     ///start:slot:afterCreate<<<///end:slot:afterCreate<<<
   };
 
-  AFTER_CREATE_AND_CHECKOUT = entity => {
+  AFTER_CREATE_AND_CHECKOUT = (entity) => {
     console.log('AFTER_CREATE_AND_CHECKOUT', entity);
     ///start:slot:afterCreateCheckout<<<///end:slot:afterCreateCheckout<<<
   };
@@ -57,25 +57,25 @@ class BadgesList extends ListContainer {
     ///start:slot:afterRemove<<<///end:slot:afterRemove<<<
   };
 
-  ON_OPEN_ITEM = item => {
+  ON_OPEN_ITEM = (item) => {
     console.log('ON_OPEN_ITEM', item);
     this.openDialog(item);
 
     ///start:slot:onOpenItem<<<///end:slot:onOpenItem<<<
   };
 
-  openDialogCheckOut = item => {
+  openDialogCheckOut = (item) => {
     this.setState({
-      checkout: item
+      checkout: item,
     });
   };
 
-  closeDialogCheckOut = feedback => {
+  closeDialogCheckOut = (feedback) => {
     if (feedback == 'ok') {
       this.refresh();
     }
     this.setState({
-      checkout: false
+      checkout: false,
     });
   };
   ///start:slot:js<<<///end:slot:js<<<
@@ -89,45 +89,83 @@ class BadgesList extends ListContainer {
 
     return (
       <NoSsr>
-        <Typography variant='h3' className='app-header-primary' gutterBottom>
-          WELCOME TO MOLEX JUÁREZ
-        </Typography>
-        <img src='/static/images/Molex_Red.png' alt='Logo Molex' style={{ width: 280, margin: 40 }} />
-        <Button variant='contained' size='large' className='app-btn-1' onClick={() => navigateTo('/badge-new')}>
+        {/* <Typography
+          variant="h4"
+          className="app-header-primary"
+          gutterBottom
+          style={{ textAlign: 'center', marginTop: 50 }}
+        >
+          WELCOME TO THE COMPANY
+        </Typography> */}
+        <img
+          src="/static/images/logo-bedel.png"
+          alt="Logo Bedel"
+          style={{ width: 240, margin: 50 }}
+        />
+        <Button
+          variant="contained"
+          size="large"
+          className="app-btn-1"
+          onClick={() => navigateTo('/badge-new')}
+        >
           <Icon style={{ paddingRight: 35 }}>person_add</Icon> New Visitor Badge
         </Button>
-        <img src='/static/images/id-badge-solid.svg' alt='Id-Badge' style={{ width: 150, margin: 40 }} />
+        <img
+          src="/static/images/id-badge-solid.svg"
+          alt="Id-Badge"
+          style={{ width: 150, margin: 40 }}
+        />
         <Button
-          variant='contained'
-          size='large'
-          color='default'
-          onClick={event => {
+          variant="contained"
+          size="large"
+          color="default"
+          onClick={(event) => {
             this.openDialogCheckOut(event, {});
           }}
-          className='app-btn-2'
+          className="app-btn-2"
         >
           <Icon>how_to_reg</Icon> Check Out
         </Button>
         {/* <Button variant='outlined' onClick={() => navigateTo('/badges')} style={{ marginTop: '3%' }}>
           Visitor Badge History
         </Button> */}
-        <Grid container direction='row' style={{ textAlign: 'center', marginTop: 50 }} xs={12}>
+        <Grid
+          container
+          direction="row"
+          style={{ textAlign: 'center', marginTop: 50 }}
+          xs={12}
+        >
           <Grid item xs={6}>
-            <img src='/static/images/oea.png' alt='oea' className='oeaImg' />
+            <img src="/static/images/oea.png" alt="oea" className="oeaImg" />
           </Grid>
           <Grid item xs={6}>
-            <img src='/static/images/ctpat.png' alt='ctpat' className='ctparImg' />
+            <img
+              src="/static/images/ctpat.png"
+              alt="ctpat"
+              className="ctparImg"
+            />
           </Grid>
         </Grid>
-        <Dialog open={!!this.state.checkout} onClose={this.closeDialogCheckOut} draggable title='CheckOut'>
-          {dialog => {
-            return !isLoading && <CheckOut dialog={dialog} data={this.state.checkout} />;
-          }}
-        </Dialog>
+        {!!this.state.checkout && (
+          <Dialog
+            open={!!this.state.checkout}
+            onClose={this.closeDialogCheckOut}
+            draggable
+            title="CheckOut"
+          >
+            {(dialog) => {
+              return (
+                !isLoading && (
+                  <CheckOut dialog={dialog} data={this.state.checkout} />
+                )
+              );
+            }}
+          </Dialog>
+        )}
         <AppBar style={{ top: 'auto', bottom: 0, background: '#333333' }}>
           <Toolbar>
-            <Grid container direction='column' alignItems='center'>
-              <Typography> © 2019 | Visitor Badge System By Molex Juárez </Typography>
+            <Grid container direction="column" alignItems="center">
+              <Typography> © 2023 | Visitor Badge System by Bedel </Typography>
             </Grid>
           </Toolbar>
         </AppBar>

@@ -25,7 +25,7 @@ const defaultConfig = {
   service,
   ///start:slot:config<<<
   filterName: 'FilterCatalogType',
-  sortName: 'SortCatalogType'
+  sortName: 'SortCatalogType',
   ///end:slot:config<<<
 };
 
@@ -46,7 +46,7 @@ class CatalogTypesList extends ListContainer {
     ///start:slot:afterLoad<<<///end:slot:afterLoad<<<
   };
 
-  AFTER_CREATE = instance => {
+  AFTER_CREATE = (instance) => {
     console.log('AFTER_CREATE', instance);
 
     ///start:slot:afterCreate<<<
@@ -54,7 +54,7 @@ class CatalogTypesList extends ListContainer {
     ///end:slot:afterCreate<<<
   };
 
-  AFTER_CREATE_AND_CHECKOUT = entity => {
+  AFTER_CREATE_AND_CHECKOUT = (entity) => {
     console.log('AFTER_CREATE_AND_CHECKOUT', entity);
     ///start:slot:afterCreateCheckout<<<///end:slot:afterCreateCheckout<<<
   };
@@ -64,7 +64,7 @@ class CatalogTypesList extends ListContainer {
     ///start:slot:afterRemove<<<///end:slot:afterRemove<<<
   };
 
-  ON_OPEN_ITEM = item => {
+  ON_OPEN_ITEM = (item) => {
     console.log('ON_OPEN_ITEM', item);
 
     ///start:slot:onOpenItem<<<
@@ -72,22 +72,22 @@ class CatalogTypesList extends ListContainer {
     ///end:slot:onOpenItem<<<
   };
 
-  open = item => {
+  open = (item) => {
     Router.push(`/catalog?name=${item.Name}`);
   };
 
-  openDialog = item => {
+  openDialog = (item) => {
     this.setState({
-      catalog: item
+      catalog: item,
     });
   };
 
-  closeDialog = feedback => {
+  closeDialog = (feedback) => {
     if (feedback == 'ok') {
       this.refresh();
     }
     this.setState({
-      catalog: false
+      catalog: false,
     });
   };
   ///start:slot:js<<<///end:slot:js<<<
@@ -96,22 +96,22 @@ class CatalogTypesList extends ListContainer {
     return (
       <NoSsr>
         <Container style={{ padding: 20 }}>
-          <Typography variant='h4' className='h4' gutterBottom>
+          <Typography variant="h4" className="h4" gutterBottom>
             Catalog Types
           </Typography>
-          <Grid container direction='row'>
-            <Grid item xs />
+          <Grid container direction="row">
+            <Grid item xs={12} />
             <Pagination
               activePage={this.state.filterOptions.page}
               itemsCountPerPage={this.state.filterOptions.limit}
               totalItemsCount={this.state.filterOptions.totalItems}
               pageRangeDisplayed={5}
-              onChange={newPage => {
+              onChange={(newPage) => {
                 this.pageChanged(newPage);
               }}
             />
           </Grid>
-          <Table className='' size='small'>
+          <Table className="" size="small">
             <TableHead>
               <TableRow>
                 <TableCell />
@@ -122,16 +122,23 @@ class CatalogTypesList extends ListContainer {
             </TableHead>
             <TableBody>
               {this.state.baseList &&
-                this.state.baseList.map(item => (
+                this.state.baseList.map((item) => (
                   <TableRow key={item.Id}>
                     <TableCell width={200}>
-                      <Grid container direction='row' className='row' justify='center' alignItems='center' spacing={2}>
+                      <Grid
+                        container
+                        direction="row"
+                        className="row"
+                        justify="center"
+                        alignItems="center"
+                        spacing={2}
+                      >
                         <Grid item xs>
                           <Button
-                            variant='contained'
-                            color='default'
-                            className=''
-                            onClick={event => {
+                            variant="contained"
+                            color="default"
+                            className=""
+                            onClick={(event) => {
                               this.openItem(event, item);
                             }}
                           >
@@ -140,9 +147,9 @@ class CatalogTypesList extends ListContainer {
                         </Grid>
                         <Grid item xs>
                           <Button
-                            variant='contained'
-                            color='default'
-                            className=''
+                            variant="contained"
+                            color="default"
+                            className=""
                             onClick={() => {
                               this.open(item);
                             }}
@@ -154,26 +161,42 @@ class CatalogTypesList extends ListContainer {
                     </TableCell>
                     <TableCell>{item.Name}</TableCell>
                     <TableCell>{item.ParentType}</TableCell>
-                    <TableCell>{item.ConvertedFields && item.ConvertedFields.map(e => e.FieldName).join(', ')}</TableCell>
+                    <TableCell>
+                      {item.ConvertedFields &&
+                        item.ConvertedFields.map((e) => e.FieldName).join(', ')}
+                    </TableCell>
                   </TableRow>
                 ))}
             </TableBody>
           </Table>
         </Container>
-        <Dialog open={!!this.state.catalog} onClose={this.closeDialog} draggable title='Catalog Type' okLabel='Save'>
-          {dialog => {
-            return !this.state.isLoading && <CatalogType dialog={dialog} data={this.state.catalog} />;
+        <Dialog
+          open={!!this.state.catalog}
+          onClose={this.closeDialog}
+          draggable
+          title="Catalog Type"
+          okLabel="Save"
+        >
+          {(dialog) => {
+            return (
+              !this.state.isLoading && (
+                <CatalogType dialog={dialog} data={this.state.catalog} />
+              )
+            );
           }}
         </Dialog>
-        <AppBar position='fixed' style={{ top: 'auto', bottom: 0 }}>
-          <Toolbar variant='dense'>
-            <SearchBox bindFilterInput={this.bindFilterInput} value={this.state.filterOptions.filterGeneral} />
-            <Grid item xs />
+        <AppBar position="fixed" style={{ top: 'auto', bottom: 0 }}>
+          <Toolbar variant="dense">
+            <SearchBox
+              bindFilterInput={this.bindFilterInput}
+              value={this.state.filterOptions.filterGeneral}
+            />
+            <Grid item xs={12} />
             <Button
-              variant='contained'
-              color='default'
-              className=''
-              onClick={event => {
+              variant="contained"
+              color="default"
+              className=""
+              onClick={(event) => {
                 this.createInstance(event, {});
               }}
             >

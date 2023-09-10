@@ -28,7 +28,7 @@ const service = new CatalogService();
 const defaultConfig = {
   service,
   ///start:slot:config<<<
-  filterName: 'Catalog'
+  filterName: 'Catalog',
   ///end:slot:config<<<
 };
 
@@ -42,9 +42,14 @@ class CatalogsList extends ListContainer {
     console.log('List did mount');
     this.load(this.props.router.query);
     ///start:slot:didMount<<<
-    catalogTypeService.GetSingleWhere('Name', this.props.router.query.name).then(response => {
-      this.setState({ additionalFields: response.ConvertedFields, parentType: response.ParentType });
-    });
+    catalogTypeService
+      .GetSingleWhere('Name', this.props.router.query.name)
+      .then((response) => {
+        this.setState({
+          additionalFields: response.ConvertedFields,
+          parentType: response.ParentType,
+        });
+      });
     ///end:slot:didMount<<<
   }
 
@@ -53,7 +58,7 @@ class CatalogsList extends ListContainer {
     ///start:slot:afterLoad<<<///end:slot:afterLoad<<<
   };
 
-  AFTER_CREATE = instance => {
+  AFTER_CREATE = (instance) => {
     console.log('AFTER_CREATE', instance);
 
     ///start:slot:afterCreate<<<
@@ -62,7 +67,7 @@ class CatalogsList extends ListContainer {
     ///end:slot:afterCreate<<<
   };
 
-  AFTER_CREATE_AND_CHECKOUT = entity => {
+  AFTER_CREATE_AND_CHECKOUT = (entity) => {
     console.log('AFTER_CREATE_AND_CHECKOUT', entity);
     ///start:slot:afterCreateCheckout<<<///end:slot:afterCreateCheckout<<<
   };
@@ -72,7 +77,7 @@ class CatalogsList extends ListContainer {
     ///start:slot:afterRemove<<<///end:slot:afterRemove<<<
   };
 
-  ON_OPEN_ITEM = item => {
+  ON_OPEN_ITEM = (item) => {
     console.log('ON_OPEN_ITEM', item);
 
     ///start:slot:onOpenItem<<<
@@ -80,18 +85,18 @@ class CatalogsList extends ListContainer {
     ///end:slot:onOpenItem<<<
   };
 
-  openDialog = item => {
+  openDialog = (item) => {
     this.setState({
-      catalog: item
+      catalog: item,
     });
   };
 
-  closeDialog = feedback => {
+  closeDialog = (feedback) => {
     if (feedback == 'ok') {
       this.refresh();
     }
     this.setState({
-      catalog: false
+      catalog: false,
     });
   };
   ///start:slot:js<<<
@@ -105,48 +110,62 @@ class CatalogsList extends ListContainer {
     const { additionalFields, parentType } = this.state;
     return (
       <NoSsr>
-        <Container style={{ padding: 20 }} maxWidth='lg'>
-          <Typography variant='h4' className='h4' gutterBottom>
+        <Container style={{ padding: 20 }} maxWidth="lg">
+          <Typography variant="h4" className="h4" gutterBottom>
             {this.props.router.query.name}
           </Typography>
-          <Grid container direction='row'>
-            <Grid item xs />
+          <Grid container direction="row">
+            <Grid item xs={12} />
             <Pagination
               activePage={this.state.filterOptions.page}
               itemsCountPerPage={this.state.filterOptions.limit}
               totalItemsCount={this.state.filterOptions.totalItems}
               pageRangeDisplayed={5}
-              onChange={newPage => {
+              onChange={(newPage) => {
                 this.pageChanged(newPage || 0);
               }}
             />
           </Grid>
-          <Paper style={{ overflowX: 'auto', width: '100%', overflowY: 'hidden' }}>
-            <Table className='' size='small'>
+          <Paper
+            style={{ overflowX: 'auto', width: '100%', overflowY: 'hidden' }}
+          >
+            <Table className="" size="small">
               <TableHead>
                 <TableRow>
                   <TableCell />
                   <TableCell>Value</TableCell>
                   {parentType && <TableCell>Parent</TableCell>}
                   <TableCell>Hidden</TableCell>
-                  {additionalFields && additionalFields.map(field => <TableCell key={field.FieldName}>{field.FieldName}</TableCell>)}
+                  {additionalFields &&
+                    additionalFields.map((field) => (
+                      <TableCell key={field.FieldName}>
+                        {field.FieldName}
+                      </TableCell>
+                    ))}
                 </TableRow>
               </TableHead>
               <TableBody>
                 {this.state.baseList &&
-                  this.state.baseList.map(item => (
+                  this.state.baseList.map((item) => (
                     <TableRow key={item.Id}>
                       <TableCell>
-                        <Grid container direction='row' className='row' justify='center' alignItems='center' spacing={2}>
+                        <Grid
+                          container
+                          direction="row"
+                          className="row"
+                          justify="center"
+                          alignItems="center"
+                          spacing={2}
+                        >
                           <Grid item xs>
                             <Button
-                              variant='contained'
-                              color='default'
-                              className=''
-                              onClick={event => {
+                              variant="contained"
+                              color="default"
+                              className=""
+                              onClick={(event) => {
                                 this.openItem(event, item);
                               }}
-                              size='small'
+                              size="small"
                             >
                               <Icon>edit</Icon>Open
                             </Button>
@@ -155,17 +174,29 @@ class CatalogsList extends ListContainer {
                       </TableCell>
                       <TableCell>{item.Value}</TableCell>
                       {parentType && <TableCell>{item.ParentValue}</TableCell>}
-                      <TableCell>{(item.Hidden || '').toString().toUpperCase()}</TableCell>
+                      <TableCell>
+                        {(item.Hidden || '').toString().toUpperCase()}
+                      </TableCell>
                       {additionalFields &&
-                        additionalFields.map(field => <TableCell key={field.FieldName}>{item.ConvertedMeta[field.FieldName]}</TableCell>)}
+                        additionalFields.map((field) => (
+                          <TableCell key={field.FieldName}>
+                            {item.ConvertedMeta[field.FieldName]}
+                          </TableCell>
+                        ))}
                     </TableRow>
                   ))}
               </TableBody>
             </Table>
           </Paper>
         </Container>
-        <Dialog open={!!this.state.catalog} onClose={this.closeDialog} draggable title='Catalog' okLabel='Save'>
-          {dialog => {
+        <Dialog
+          open={!!this.state.catalog}
+          onClose={this.closeDialog}
+          draggable
+          title="Catalog"
+          okLabel="Save"
+        >
+          {(dialog) => {
             return (
               !this.state.isLoading && (
                 <Catalog
@@ -178,15 +209,18 @@ class CatalogsList extends ListContainer {
             );
           }}
         </Dialog>
-        <AppBar position='fixed' style={{ top: 'auto', bottom: 0 }}>
-          <Toolbar variant='dense'>
-            <SearchBox bindFilterInput={this.bindFilterInput} value={this.state.filterOptions.filterGeneral} />
-            <Grid item xs />
+        <AppBar position="fixed" style={{ top: 'auto', bottom: 0 }}>
+          <Toolbar variant="dense">
+            <SearchBox
+              bindFilterInput={this.bindFilterInput}
+              value={this.state.filterOptions.filterGeneral}
+            />
+            <Grid item xs={12} />
             <Button
-              variant='contained'
-              color='default'
-              className=''
-              onClick={event => {
+              variant="contained"
+              color="default"
+              className=""
+              onClick={(event) => {
                 this.createInstance(event, {});
               }}
             >

@@ -12,12 +12,12 @@ import Typography from '@material-ui/core/Typography';
 import { checkPropTypes } from 'prop-types';
 import AuthService from '../core/AuthService';
 
-const Login = props => {
+const Login = (props) => {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [error, setError] = useState();
 
-  const login = async event => {
+  const login = async (event) => {
     event.preventDefault();
     try {
       await AuthService.login(username, password);
@@ -27,37 +27,52 @@ const Login = props => {
     }
   };
   return (
-    <div className='container-fluid'>
-      <div className='login'>
-        <Card className='card'>
+    <div className="container-fluid">
+      <div className="login">
+        <Card className="card">
           <form onSubmit={login}>
             <CardContent>
-              <Typography style={{ margin: '10px 5px' }} variant='h4' align='center' color='inherit'>
+              <Typography
+                style={{ margin: '10px 5px' }}
+                variant="h4"
+                align="center"
+                color="inherit"
+              >
                 Visitor Badge
               </Typography>
-              <Grid container alignItems='center'>
-                <img src='/static/images/Molex_Red.png' alt='logo' style={{ width: 150 }} />
+              <Grid container alignItems="center">
+                <img
+                  src="/static/images/logo-bedel.png"
+                  alt="logo"
+                  style={{ width: 150, marginBottom: 10, marginTop: 10 }}
+                />
               </Grid>
-              <div className='finger'>
+              <div className="finger">
                 <Fingerprint style={{ fontSize: 50 }} />
               </div>
-              <div className='text-field'>
-                <TextField required fullWidth label='User Name' margin='normal' onChange={event => setUsername(event.target.value)} />
-              </div>
-              <div className='text-field'>
+              <div className="text-field">
                 <TextField
                   required
                   fullWidth
-                  label='Password'
-                  type='password'
-                  autoComplete='current-password'
-                  margin='normal'
-                  onChange={event => setPassword(event.target.value)}
+                  label="User Name"
+                  margin="normal"
+                  onChange={(event) => setUsername(event.target.value)}
+                />
+              </div>
+              <div className="text-field">
+                <TextField
+                  required
+                  fullWidth
+                  label="Password"
+                  type="password"
+                  autoComplete="current-password"
+                  margin="normal"
+                  onChange={(event) => setPassword(event.target.value)}
                 />
               </div>
               {error && <p>{error}</p>}
-              <div className='botton'>
-                <Fab variant='extended' aria-label='Delete' type='submit'>
+              <div className="botton">
+                <Fab variant="extended" aria-label="Delete" type="submit">
                   <Lock />
                   Login
                 </Fab>

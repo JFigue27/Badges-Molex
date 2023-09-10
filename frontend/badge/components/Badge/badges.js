@@ -12,9 +12,7 @@ import { TableRow } from '@material-ui/core';
 import { TableCell } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import { Icon } from '@material-ui/core';
-import { TextField } from '@material-ui/core';
 import { InputBase } from '@material-ui/core';
-import { KeyboardDateTimePicker } from '@material-ui/pickers';
 import Dialog from '../../widgets/Dialog';
 import Badge from './badge.js';
 import CheckOut from './checkOut.js';
@@ -27,7 +25,7 @@ import Loader from '../Loader';
 
 const service = new BadgeService();
 const defaultConfig = {
-  service
+  service,
   ///start:slot:config<<<///end:slot:config<<<
 };
 
@@ -45,12 +43,12 @@ class BadgesList extends ListContainer {
     ///start:slot:didMount<<<///end:slot:didMount<<<
   }
 
-  AFTER_LOAD = baseList => {
+  AFTER_LOAD = (baseList) => {
     console.log('AFTER_LOAD');
     ///start:slot:afterLoad<<<///end:slot:afterLoad<<<
   };
 
-  AFTER_CREATE = instance => {
+  AFTER_CREATE = (instance) => {
     console.log('AFTER_CREATE', instance);
 
     this.openDialog(instance);
@@ -59,7 +57,7 @@ class BadgesList extends ListContainer {
     ///end:slot:afterCreate<<<
   };
 
-  AFTER_CREATE_AND_CHECKOUT = entity => {
+  AFTER_CREATE_AND_CHECKOUT = (entity) => {
     console.log('AFTER_CREATE_AND_CHECKOUT', entity);
     ///start:slot:afterCreateCheckout<<<///end:slot:afterCreateCheckout<<<
   };
@@ -71,7 +69,7 @@ class BadgesList extends ListContainer {
     ///end:slot:afterRemove<<<
   };
 
-  ON_OPEN_ITEM = item => {
+  ON_OPEN_ITEM = (item) => {
     console.log('ON_OPEN_ITEM', item);
 
     this.openDialog(item);
@@ -80,32 +78,32 @@ class BadgesList extends ListContainer {
     ///end:slot:onOpenItem<<<
   };
 
-  openDialog = item => {
+  openDialog = (item) => {
     this.setState({
-      badge: item
+      badge: item,
     });
   };
 
-  closeDialog = feedback => {
+  closeDialog = (feedback) => {
     if (feedback == 'ok') {
       this.refresh();
     }
     this.setState({
-      badge: false
+      badge: false,
     });
   };
-  openDialogCheckOut = item => {
+  openDialogCheckOut = (item) => {
     this.setState({
-      checkout: item
+      checkout: item,
     });
   };
 
-  closeDialogCheckOut = feedback => {
+  closeDialogCheckOut = (feedback) => {
     if (feedback == 'ok') {
       this.refresh();
     }
     this.setState({
-      checkout: false
+      checkout: false,
     });
     this.refresh();
   };
@@ -120,23 +118,30 @@ class BadgesList extends ListContainer {
 
     return (
       <NoSsr>
-        <Grid className='container-fluid' container direction='column' item xs={12} style={{ padding: 20 }}>
-          <Typography variant='h6' className='h6' gutterBottom>
+        <Grid
+          className="container-fluid"
+          container
+          direction="column"
+          item
+          xs={12}
+          style={{ padding: 20 }}
+        >
+          <Typography variant="h6" className="h6" gutterBottom>
             Badges
           </Typography>
-          <Grid container direction='row'>
-            <Grid item xs />
+          <Grid container direction="row">
+            <Grid item xs={12} />
             <Pagination
               activePage={filterOptions.page}
               itemsCountPerPage={filterOptions.limit}
               totalItemsCount={filterOptions.itemsCount}
               pageRangeDisplayed={5}
-              onChange={newPage => {
+              onChange={(newPage) => {
                 this.pageChanged(newPage);
               }}
             />
           </Grid>
-          <Table className='' size='small'>
+          <Table className="" size="small">
             <TableHead>
               <TableRow>
                 <TableCell />
@@ -153,19 +158,26 @@ class BadgesList extends ListContainer {
             </TableHead>
             <TableBody>
               {baseList &&
-                baseList.map(item => (
+                baseList.map((item) => (
                   <TableRow key={item.Id}>
                     <TableCell>
-                      <Grid container direction='row' className='row' justify='center' alignItems='flex-end' spacing={2}>
+                      <Grid
+                        container
+                        direction="row"
+                        className="row"
+                        justify="center"
+                        alignItems="flex-end"
+                        spacing={2}
+                      >
                         <Grid item xs={12} sm>
                           <Button
-                            variant='contained'
-                            color='default'
-                            className=''
-                            onClick={event => {
+                            variant="contained"
+                            color="default"
+                            className=""
+                            onClick={(event) => {
                               this.openItem(event, item);
                             }}
-                            size='small'
+                            size="small"
                           >
                             <Icon>edit</Icon>Open
                           </Button>
@@ -187,12 +199,14 @@ class BadgesList extends ListContainer {
                     </TableCell>
                     <TableCell>
                       <InputBase
-                        type='text'
-                        className=''
-                        autoComplete='off'
+                        type="text"
+                        className=""
+                        autoComplete="off"
                         disabled={this.isDisabled}
                         readOnly={true}
-                        onChange={event => this.handleInputChange(event, 'ID')}
+                        onChange={(event) =>
+                          this.handleInputChange(event, 'ID')
+                        }
                         value={item.Id || ''}
                         fullWidth
                       />
@@ -211,101 +225,143 @@ class BadgesList extends ListContainer {
                     </TableCell> */}
                     <TableCell>
                       <InputBase
-                        type='text'
-                        className=''
-                        autoComplete='off'
+                        type="text"
+                        className=""
+                        autoComplete="off"
                         disabled={this.isDisabled}
                         readOnly={true}
-                        onChange={event => this.handleInputChange(event, 'FirstName')}
+                        onChange={(event) =>
+                          this.handleInputChange(event, 'FirstName')
+                        }
                         value={item.FirstName || ''}
                         fullWidth
                       />
                     </TableCell>
                     <TableCell>
                       <InputBase
-                        type='text'
-                        className=''
-                        autoComplete='off'
+                        type="text"
+                        className=""
+                        autoComplete="off"
                         disabled={this.isDisabled}
                         readOnly={true}
-                        onChange={event => this.handleInputChange(event, 'LastName')}
+                        onChange={(event) =>
+                          this.handleInputChange(event, 'LastName')
+                        }
                         value={item.LastName || ''}
                         fullWidth
                       />
                     </TableCell>
                     <TableCell>
                       <InputBase
-                        type='text'
-                        className=''
-                        autoComplete='off'
+                        type="text"
+                        className=""
+                        autoComplete="off"
                         disabled={this.isDisabled}
                         readOnly={true}
-                        onChange={event => this.handleInputChange(event, 'Company')}
+                        onChange={(event) =>
+                          this.handleInputChange(event, 'Company')
+                        }
                         value={item.Company || ''}
                         fullWidth
                       />
                     </TableCell>
                     <TableCell>
                       <InputBase
-                        type='text'
-                        className=''
-                        autoComplete='off'
+                        type="text"
+                        className=""
+                        autoComplete="off"
                         disabled={this.isDisabled}
                         readOnly={true}
-                        onChange={event => this.handleInputChange(event, 'Citizenship')}
+                        onChange={(event) =>
+                          this.handleInputChange(event, 'Citizenship')
+                        }
                         value={item.Citizenship || ''}
                         fullWidth
                       />
                     </TableCell>
                     <TableCell>
                       <InputBase
-                        type='text'
-                        className=''
-                        autoComplete='off'
+                        type="text"
+                        className=""
+                        autoComplete="off"
                         disabled={this.isDisabled}
                         readOnly={true}
-                        onChange={event => this.handleInputChange(event, 'Visiting')}
+                        onChange={(event) =>
+                          this.handleInputChange(event, 'Visiting')
+                        }
                         value={item.Visiting || ''}
                         fullWidth
                       />
                     </TableCell>
-                    <TableCell style={{ minWidth: 180 }}>{this.formatDate(item.CheckIn) + ' ' + this.formatTime(item.CheckIn)}</TableCell>
-                    <TableCell style={{ minWidth: 180 }}>{this.formatDate(item.CheckOut) + ' ' + this.formatTime(item.CheckOut)}</TableCell>
+                    <TableCell style={{ minWidth: 180 }}>
+                      {this.formatDate(item.CheckIn) +
+                        ' ' +
+                        this.formatTime(item.CheckIn)}
+                    </TableCell>
+                    <TableCell style={{ minWidth: 180 }}>
+                      {this.formatDate(item.CheckOut) +
+                        ' ' +
+                        this.formatTime(item.CheckOut)}
+                    </TableCell>
                   </TableRow>
                 ))}
             </TableBody>
           </Table>
         </Grid>
-        <Dialog open={!!this.state.badge} onClose={this.closeDialog} draggable title='Visitor Badge' okLabel='Save' maxWidth='md'>
-          {dialog => {
-            return !isLoading && <Badge dialog={dialog} data={this.state.badge} />;
+        <Dialog
+          open={!!this.state.badge}
+          onClose={this.closeDialog}
+          draggable
+          title="Visitor Badge"
+          okLabel="Save"
+          maxWidth="md"
+        >
+          {(dialog) => {
+            return (
+              !isLoading && <Badge dialog={dialog} data={this.state.badge} />
+            );
           }}
         </Dialog>
-        <Dialog open={!!this.state.checkout} onClose={this.closeDialogCheckOut} draggable title='CheckOut'>
-          {dialog => {
-            return !isLoading && <CheckOut dialog={dialog} data={this.state.checkout} />;
+        <Dialog
+          open={!!this.state.checkout}
+          onClose={this.closeDialogCheckOut}
+          draggable
+          title="CheckOut"
+        >
+          {(dialog) => {
+            return (
+              !isLoading && (
+                <CheckOut dialog={dialog} data={this.state.checkout} />
+              )
+            );
           }}
         </Dialog>
-        <AppBar position='fixed' style={{ top: 'auto', bottom: 0, background: '#333333' }}>
-          <Toolbar variant='dense'>
-            <SearchBox bindFilterInput={this.bindFilterInput} value={filterOptions.filterGeneral} />
+        <AppBar
+          position="fixed"
+          style={{ top: 'auto', bottom: 0, background: '#333333' }}
+        >
+          <Toolbar variant="dense">
+            <SearchBox
+              bindFilterInput={this.bindFilterInput}
+              value={filterOptions.filterGeneral}
+            />
             <Grid item xs={12} sm />
             <Button
-              variant='contained'
-              color='default'
-              className=''
-              onClick={event => {
+              variant="contained"
+              color="default"
+              className=""
+              onClick={(event) => {
                 this.openDialogCheckOut(event, {});
               }}
-              size='small'
+              size="small"
             >
               <Icon>edit</Icon>CheckOut
             </Button>
             <Button
-              variant='contained'
-              color='default'
-              className=''
-              onClick={event => {
+              variant="contained"
+              color="default"
+              className=""
+              onClick={(event) => {
                 this.createInstance(event, {});
               }}
             >
